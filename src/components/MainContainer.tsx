@@ -17,10 +17,15 @@ class MainContainer extends React.Component<MainContainerProps> {
     return(
       <div className="Main-container">
         {this.props.testCases[0].key}
-        <TestCaseList 
-          testCases={this.props.testCases}
-          nextSortId={this.nextSortId}
-        />
+        <div className="Test-case-list-container">
+          <TestCaseList 
+            testCases={this.props.testCases}
+            nextSortId={this.nextSortId}
+          />
+        </div>
+        <div className="Detail-pane-container">
+          Detail pane goes here
+        </div>
       </div>
     );
   }

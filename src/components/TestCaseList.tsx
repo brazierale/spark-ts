@@ -24,7 +24,6 @@ class TestCaseList extends React.Component<TestCaseListProps> {
       testCases.map((testCase) => 
         <Row key={testCase.key}
           testCase={testCase}
-          nextSortId={this.props.nextSortId}
           moveAboveSortId={ (key: string ) => this.moveAboveSortId(key)}
         />
       )
