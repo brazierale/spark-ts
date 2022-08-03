@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import classNames from 'classnames';
 import { TestCaseObject } from '../modules/TestCase';
-import { generateKey } from '../modules/KeyGen';
 
 interface TestCaseInputProps {
   testCase: TestCaseObject;
@@ -32,18 +31,18 @@ class TestCaseInput extends Component<TestCaseInputProps> {
   }
 
   handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    console.log('update summary');
+    console.log(`update summary for "${this.props.testCase.summary}"`);
   }
 
   handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === 'Tab') {
       event.preventDefault();
-      console.log('apply change');
+      console.log(`apply change for "${this.props.testCase.summary}"`);
     }
   }
     
   handleFocus = () => {
-    console.log('set this as selected in state');
+    console.log(`"${this.props.testCase.summary}" selected`);
   }
 
   sendUpdate = ( summary: string ) => {

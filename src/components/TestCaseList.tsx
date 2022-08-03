@@ -5,6 +5,7 @@ import '../styles/TestCaseList.css';
 
 interface TestCaseListProps {
   testCases: TestCaseObject[];
+  selectedTestCase: TestCaseObject;
 }
 
 class TestCaseList extends Component<TestCaseListProps> {
@@ -21,6 +22,7 @@ class TestCaseList extends Component<TestCaseListProps> {
       testCases.map((testCase) => 
         <Row key={testCase.key}
           testCase={testCase}
+          selectedTestCase={this.props.selectedTestCase}
         />
       )
     );

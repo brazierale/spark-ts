@@ -1,0 +1,91 @@
+.Label {
+    color: #002D37;
+    font-weight: 600;
+    margin: 0px 10px 10px 10px;
+    align-self: flex-start;
+}
+
+.Detail-pane-container {
+    height: calc(100vh - 80px);
+    width: 50%;
+    padding: 60px 40px 20px 1px;
+}
+
+.Detail-pane {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    min-height: 100%;
+    background: #F6F7FE;
+    box-shadow: 2px 2px 5px #CCCCCC;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    z-index: 2;
+}
+
+.Detail-pane-header {
+    margin: 20px 20px 0px 20px;
+}
+
+.Detail-pane-header h1 {
+    min-height: 26px;
+    margin: 0px;
+    padding: 0px 0px 10px 0px;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #071F79;
+}
+.Detail-pane-body {
+    overflow: auto;
+    height: 100%;
+}
+
+.Detail-pane-footer {
+    margin: 0px 20px 20px 20px;
+    border-top: 2px solid #071F79;
+}
+
+button {
+    border: none;
+    float: right;
+    height: 35px;
+    width: 75px;
+    margin-top: 10px;
+    padding: 0px 20px;
+    color: white;
+    border-radius: 4px;
+    box-shadow: 0px 2px 5px #CCCCCC;
+    outline: none;
+    transition: transform 0.05s ease-out,
+        box-shadow 0.1s ease-in-out
+}
+
+button:hover {
+    box-shadow: 0px 4px 8px #CCCCCC;
+    opacity: 0.8;
+}
+
+button:active {
+    box-shadow: 0px 1px 2px #CCCCCC;
+    transform: scale(0.9); 
+}
+
+button:disabled {
+    opacity: 0.2;
+}
+
+.Save-details {
+    background: #39A223;
+}
+
+.Debug-key {
+    color: lightgray;
+    font-size: 0.6rem;
+    text-align: right;
+    position: absolute;
+    font-size: 0.6rem;
+    right: 50px;
+    top: 60px;
+    line-height: 24px;
+    text-align: right;
+}
