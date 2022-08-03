@@ -1,23 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './styles/App.css'
+
+const logo = require('./styles/small-header.svg')
 
 function App() {
   return (
     <div className="App">
+      <Header />
+    </div>
+  );
+}
+
+const Header = () => {
+  return (
+    <div className="Header">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );
