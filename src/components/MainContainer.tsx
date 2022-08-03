@@ -1,46 +1,23 @@
-import React from 'react';
-import { generateSortId } from '../modules/KeyGen';
-import { TestCaseObject } from '../modules/TestCase';
+import { useRecoilValue } from 'recoil';
 import TestCaseList from './TestCaseList';
+import testCaseListState from '../atoms/TestCaseListState';
 
-interface MainContainerProps {
-  testCases: TestCaseObject[]
-}
+const MainContainer = () => {
 
-class MainContainer extends React.Component<MainContainerProps> {
-
-  componentDidMount() {
-    //this.props.getTestCases();
-  }
-
-  render() {
-    return(
-      <div className="Main-container">
-        {this.props.testCases[0].key}
-        <div className="Test-case-list-container">
-          <TestCaseList 
-            testCases={this.props.testCases}
-            nextSortId={this.nextSortId}
-          />
-        </div>
-        <div className="Detail-pane-container">
-          Detail pane goes here
-        </div>
+  const testCaseList = useRecoilValue(testCaseListState);
+  
+  return(
+    <div className="Main-container">
+      <div className="Test-case-list-container">
+        <TestCaseList
+          testCases={testCaseList}
+        />
       </div>
-    );
-  }
-
-  // this should move elsewhere, but I'm not sure where yet
-  nextSortId = () => {
-    if (this.props.testCases[this.props.testCases.length-2]) {
-      return generateSortId(
-        this.props.testCases[this.props.testCases.length-2].sortId
-      );
-    }
-    else {
-      return generateSortId(0);
-    }
-  }
+      <div className="Detail-pane-container">
+        Detail pane goes here
+      </div>
+    </div>
+  );
 }
 
 export default MainContainer;
