@@ -1,8 +1,9 @@
 import React from 'react';
 import { generateSortId } from '../modules/KeyGen';
 import { TestCaseObject } from '../modules/TestCase';
+import TestCaseList from './TestCaseList';
 
-type MainContainerProps = {
+interface MainContainerProps {
   testCases: TestCaseObject[]
 }
 
@@ -16,6 +17,10 @@ class MainContainer extends React.Component<MainContainerProps> {
     return(
       <div className="Main-container">
         {this.props.testCases[0].key}
+        <TestCaseList 
+          testCases={this.props.testCases}
+          nextSortId={this.nextSortId}
+        />
       </div>
     );
   }
