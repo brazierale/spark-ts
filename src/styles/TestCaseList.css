@@ -1,0 +1,97 @@
+
+.Test-case-list-container {
+    height: calc(100vh - 80px);
+    overflow: auto;
+    width: 50%;
+    padding: 60px 1px 20px 40px;
+}
+
+.Row {
+    width: 100%;
+    display: grid;
+    margin: auto;
+    margin-top: 1px;
+    padding-right: 4px;
+    grid-template: 24px / auto 24px 24px;
+    background: white;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 5px #CCCCCC;
+    border-radius: 2px;
+}
+
+.Row:focus-within, .Selected-row {
+    box-shadow: 20px 0px 0px #F6F7FE, 2px 2px 10px #CCCCCC;
+    background-color: #F6F7FE;
+    position: relative;
+    z-index: 13;
+}
+
+.Hover-over {
+    border-top: 25px solid #ECF2F5;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+* {
+    font-family: Nunito;
+    font-size: 1rem;
+}
+
+.Test-case-input {
+    resize: none;
+    overflow: hidden;
+    margin-left: 4px;
+    width: 100%;
+    border: none;
+    line-height: 24px;
+    padding: 0px;
+    padding-left: 20px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    text-align: left;
+    border-radius: 0px 2px 2px 0px;
+    cursor: default;
+}
+
+.Test-case-input::placeholder {
+    color: #CCCCCC;
+    font-style: italic;
+}
+
+.Test-case-input:hover{
+    box-shadow: -4px 0px 0px rgba(75, 109, 233, 0.5);
+}
+
+.Test-case-input:focus, .Selected-input{
+    height:24px;
+    outline: none;
+    box-sizing: border-box;
+    box-shadow: -4px 0px 0px rgb(75, 109, 233);
+    background-color: #F6F7FE;
+    cursor: text;
+}
+
+.Delete-row, .Move-row {
+    color: #4B6DE9;
+    margin: 5px auto;
+    opacity: 0.4;
+    visibility: hidden;
+    cursor: default;
+    transition: transform 0.05s ease-out;
+}
+
+.Row:hover .Delete-row {
+    visibility: visible;
+}
+
+.Row:hover .Move-row {
+    visibility: visible;
+}
+
+.Delete-row:hover, .Move-row:hover {
+    opacity: 1;
+}
+
+.Delete-row:active, .Move-row:active {
+    transform: scale(0.8);
+}
