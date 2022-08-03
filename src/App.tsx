@@ -1,11 +1,19 @@
 import MainContainer from './components/MainContainer';
-import { blankTestCase, TestCaseObject } from './modules/TestCase';
+import { TestCaseObject } from './modules/TestCase';
 import './styles/App.css'
+import logo from './styles/small-header.svg';
 
-const logo = require('./styles/small-header.svg')
 const tempTestCases: TestCaseObject[] = [];
-
-tempTestCases.push(blankTestCase());
+tempTestCases.push(
+  new TestCaseObject(
+    'keyTest',
+      1,
+      'I am a test case summary',
+      'This is a longer piece of text because this is a description field so we want more',
+      [],
+      [],
+  )
+);
 
 function App() {
   return (
