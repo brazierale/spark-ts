@@ -6,8 +6,8 @@ const selectedTestCaseState = atom<TestCaseObject>({
   default: new TestCaseObject(
     'keyTest',
       1,
-      'I am a test case summary',
-      'This is a longer piece of text because this is a description field so we want more',
+      'Default test case',
+      'This is displayed but actually no test case is selected by default',
       [],
       [],
   )

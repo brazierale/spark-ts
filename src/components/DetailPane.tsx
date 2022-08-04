@@ -1,6 +1,7 @@
 import { Component, ReactNode } from "react";
 import '../styles/DetailPane.css';
 import Description from "./Description";
+import StepList from "./StepList";
 import { TestCaseObject } from "../modules/TestCase";
 
 interface DetailPaneProps {
@@ -20,9 +21,13 @@ class DetailPane extends Component<DetailPaneProps> {
           </div>
           <div className="Detail-pane-body">
           <Description
-              selectedTestCase={this.props.selectedTestCase}
-              updateSelectedTestCase={this.props.updateSelectedTestCase}
-            />
+            selectedTestCase={this.props.selectedTestCase}
+            updateSelectedTestCase={this.props.updateSelectedTestCase}
+          />
+          <StepList
+            selectedTestCase={this.props.selectedTestCase}
+            updateSelectedTestCase={this.props.updateSelectedTestCase}
+          />
           </div>
           <div className="Detail-pane-footer">
             <button 

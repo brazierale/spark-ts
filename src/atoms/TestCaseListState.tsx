@@ -7,16 +7,16 @@ const defaultTestCases: TestCaseObject[] = [
       1,
       'I am a test case summary',
       'This is a longer piece of text because this is a description field so we want more',
-      [],
-      [],
+      [{id: 0, name: 'First step'},{id: 2, name: 'Step 2'}],
+      ['tag', 'test'],
   ),
   new TestCaseObject(
     'test2',
       10,
       '2nd test case to see what is going on',
       'This is a longer piece of text because this is a description field so we want more',
-      [],
-      [],
+      [{id: 0, name: 'First step'}],
+      ['tag'],
   ),
   blankTestCase()
 ];

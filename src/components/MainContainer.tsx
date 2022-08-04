@@ -11,15 +11,13 @@ const MainContainer = () => {
   const [selectedTestCase, setSelectedTestCase] = useRecoilState(selectedTestCaseState);
 
   const updateTestCaseByKey = (testCase: TestCaseObject) => {
-    let newArray = testCaseList;
-    let index = newArray.findIndex( tc => {return tc.key === testCase.key});
+    let index = testCaseList.findIndex( tc => {return tc.key === testCase.key});
 
-    setTestCaseListState([...newArray.slice(0, index), testCase, ...newArray.slice(index+1)]);
+    setTestCaseListState([...testCaseList.slice(0, index), testCase, ...testCaseList.slice(index+1)]);
   }
 
   const setSelectedTestCaseByKey = (key: string) => {
-    let newArray = testCaseList;
-    let index = newArray.findIndex( tc => {return tc.key === key});
+    let index = testCaseList.findIndex( tc => {return tc.key === key});
 
     setSelectedTestCase(testCaseList[index]);
   }
