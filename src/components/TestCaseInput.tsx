@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import classNames from 'classnames';
 import { TestCaseObject } from '../modules/TestCase';
 
@@ -10,74 +9,73 @@ interface TestCaseInputProps {
   updateTestCaseByKey: (updatedTestCase: TestCaseObject) => void;
 };
 
-class TestCaseInput extends Component<TestCaseInputProps> {
-  render() {
-    let classes = classNames({
-      'Test-case': true,
-      'Test-case-input': true,
-      'Selected-input': this.props.isSelected
-    });
+const TestCaseInput = ({ testCase, selectedTestCase, isSelected, setSelectedTestCaseByKey, updateTestCaseByKey }: TestCaseInputProps) => {
 
-    return (
-      <textarea
-        data-testid="test-case-input"
-        rows={1}
-        wrap="off"
-        maxLength={255}
-        placeholder="Enter your test case here..."
-        className={classes}
-        value={this.props.testCase.summary}
-        onChange={this.handleUserInput}
-        onKeyDown={this.handleKeyDown}
-        onFocus={this.handleFocus}
-        disabled={this.props.testCase.disabled}
-      />
-    );
-  }
-
-  updateTestCaseSummary = (newSummary: string) => {
+  const updateTestCaseSummary = (newSummary: string) => {
     let updatedTestCase = new TestCaseObject(
-      this.props.testCase.key,
-      this.props.testCase.sortId,
+      testCase.key,
+      testCase.sortId,
       newSummary,
-      this.props.testCase.description,
-      this.props.testCase.steps,
-      this.props.testCase.tags,
+      testCase.description,
+      testCase.steps,
+      testCase.tags,
     )
-    this.props.updateTestCaseByKey(updatedTestCase);
+    updateTestCaseByKey(updatedTestCase);
   }
 
-  handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    this.updateTestCaseSummary(event.target.value);
+  const handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    updateTestCaseSummary(event.target.value);
   }
 
-  handleKeyDown = (event: React.KeyboardEvent) => {
+  const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === 'Tab') {
       event.preventDefault();
-      console.log(`apply change for "${this.props.testCase.summary}"`);
+      console.log(`apply change for "${testCase.summary}"`);
     }
   }
     
-  handleFocus = () => {
-    if (this.props.selectedTestCase.key !== this.props.testCase.key) {
-      this.props.setSelectedTestCaseByKey(this.props.testCase.key);
+  const handleFocus = () => {
+    if (selectedTestCase.key !== testCase.key) {
+      setSelectedTestCaseByKey(testCase.key);
     }
   }
 
-  sendUpdate = ( summary: string ) => {
+  const sendUpdate = ( summary: string ) => {
     // create new test case if this is the entryRow
-    if(this.props.testCase.key === 'blank' && summary !== '') {
+    if(testCase.key === 'blank' && summary !== '') {
       
     }
     // delete the test case if it is empty
-    else if (summary === '' && this.props.testCase.key !== 'blank') {
+    else if (summary === '' && testCase.key !== 'blank') {
       
     }
     // otherwise, update the test case
-    else if (this.props.testCase.key !== 'blank') {
+    else if (testCase.key !== 'blank') {
       
     }
   }
+
+  let classes = classNames({
+    'Test-case': true,
+    'Test-case-input': true,
+    'Selected-input': isSelected
+  });
+
+  return (
+    <textarea
+      data-testid="test-case-input"
+      rows={1}
+      wrap="off"
+      maxLength={255}
+      placeholder="Enter your test case here..."
+      className={classes}
+      value={testCase.summary}
+      onChange={handleUserInput}
+      onKeyDown={handleKeyDown}
+      onFocus={handleFocus}
+      disabled={testCase.disabled}
+    />
+  );
 }
 
 export default TestCaseInput;

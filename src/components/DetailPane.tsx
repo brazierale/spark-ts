@@ -1,42 +1,40 @@
-import { Component, ReactNode } from "react";
 import '../styles/DetailPane.css';
 import Description from "./Description";
 import StepList from "./StepList";
 import TagList from "./TagList";
 import { TestCaseObject } from "../modules/TestCase";
 
-interface DetailPaneProps {
+type DetailPaneProps = {
   selectedTestCase: TestCaseObject;
   updateSelectedTestCase: (testCase: TestCaseObject) => void;
 }
 
-class DetailPane extends Component<DetailPaneProps> {
-  render(): ReactNode {
-    if (this.props.selectedTestCase) {
+const DetailPane = ({ selectedTestCase, updateSelectedTestCase }: DetailPaneProps ) => {
+    if (selectedTestCase) {
       return (
         <div className="Detail-pane">
-          <div className="Debug-key">{this.props.selectedTestCase.key}</div>
+          <div className="Debug-key">{selectedTestCase.key}</div>
           <div className="Detail-pane-header">
-            <h1>{this.props.selectedTestCase.summary}</h1>
+            <h1>{selectedTestCase.summary}</h1>
           </div>
           <div className="Detail-pane-body">
           <Description
-            selectedTestCase={this.props.selectedTestCase}
-            updateSelectedTestCase={this.props.updateSelectedTestCase}
+            selectedTestCase={selectedTestCase}
+            updateSelectedTestCase={updateSelectedTestCase}
           />
           <StepList
-            selectedTestCase={this.props.selectedTestCase}
-            updateSelectedTestCase={this.props.updateSelectedTestCase}
+            selectedTestCase={selectedTestCase}
+            updateSelectedTestCase={updateSelectedTestCase}
           />
           <TagList
-            selectedTestCase={this.props.selectedTestCase}
-            updateSelectedTestCase={this.props.updateSelectedTestCase}
+            selectedTestCase={selectedTestCase}
+            updateSelectedTestCase={updateSelectedTestCase}
           />
           </div>
           <div className="Detail-pane-footer">
             <button 
               className="Save-details"
-              disabled={this.props.selectedTestCase.disabled}
+              disabled={selectedTestCase.disabled}
               onClick={() => console.log('saving...')}
             >Save</button>
           </div>
@@ -47,6 +45,5 @@ class DetailPane extends Component<DetailPaneProps> {
       return null;
     }
   }
-}
 
 export default DetailPane;

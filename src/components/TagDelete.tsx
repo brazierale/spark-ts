@@ -8,18 +8,22 @@ type DeleteTagProps = {
   deleteTag: (tagName: string) => void;
 };
 
-const Classes = ( disabled: boolean ) => classNames({
-  'Delete-tag': true,
-  'Disabled-delete': disabled,
-});
-
 // delete button for a single tag
-const DeleteTag = ({ tagName, disabled, deleteTag }: DeleteTagProps ) => (
-  <FontAwesomeIcon
-    data-testid="tag-delete"
-    className={Classes(disabled)}
-    icon={faTimes}
-    onClick={() => deleteTag(tagName)} />
-);
+const DeleteTag = ({ tagName, disabled, deleteTag }: DeleteTagProps ) => {
+
+  const Classes = ( disabled: boolean ) => classNames({
+    'Delete-tag': true,
+    'Disabled-delete': disabled,
+  });
+  
+  return (
+    <FontAwesomeIcon
+      data-testid="tag-delete"
+      className={Classes(disabled)}
+      icon={faTimes}
+      onClick={() => deleteTag(tagName)}
+    />
+  );
+}
 
 export default DeleteTag;

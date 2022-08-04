@@ -13,36 +13,6 @@ class StepList extends Component<StepListProps> {
   state = {
     newStep: ''
   }
-  render() {
-    const stepsToRender = this.props.selectedTestCase.steps.map( step => 
-      <Step
-        key={step.id}
-        step={step}
-        deleteStep={this.deleteStep}
-        updateStep={this.updateStep}
-        disabled={this.props.selectedTestCase.disabled}
-      />
-    );
-
-    return(
-      <div data-testid="step-list" className="Step-list-container">
-        <span className="Label">Steps</span>
-        <span className="Step-list">
-          {stepsToRender}
-          <input
-            data-testid="step-new"
-            className="Step-input"
-            placeholder="Enter new step..."
-            value={this.state.newStep}
-            onChange={this.handleUserInput}
-            onKeyDown={this.handleKeyDown}
-            onBlur={this.handleBlur}
-            disabled={this.props.selectedTestCase.disabled}
-          />
-        </span>
-      </div>
-    );
-  }
 
   addStep = (step: string) => {
     let newStep = new StepObject(
@@ -100,6 +70,37 @@ class StepList extends Component<StepListProps> {
       this.addStep(this.state.newStep);
     }
     this.setState({ newStep: '' });
+  }
+
+  render() {
+    const stepsToRender = this.props.selectedTestCase.steps.map( step => 
+      <Step
+        key={step.id}
+        step={step}
+        deleteStep={this.deleteStep}
+        updateStep={this.updateStep}
+        disabled={this.props.selectedTestCase.disabled}
+      />
+    );
+
+    return(
+      <div data-testid="step-list" className="Step-list-container">
+        <span className="Label">Steps</span>
+        <span className="Step-list">
+          {stepsToRender}
+          <input
+            data-testid="step-new"
+            className="Step-input"
+            placeholder="Enter new step..."
+            value={this.state.newStep}
+            onChange={this.handleUserInput}
+            onKeyDown={this.handleKeyDown}
+            onBlur={this.handleBlur}
+            disabled={this.props.selectedTestCase.disabled}
+          />
+        </span>
+      </div>
+    );
   }
 }
 
