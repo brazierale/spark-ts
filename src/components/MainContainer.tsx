@@ -23,6 +23,15 @@ const MainContainer = () => {
 
     setSelectedTestCase(testCaseList[index]);
   }
+
+  const updateDescription = (description: string) => {
+    let updatedTestCase = {
+      ...selectedTestCase,
+      description: description
+    }
+
+    setSelectedTestCase(updatedTestCase);
+  }
   
   return(
     <div className="Main-container">
@@ -37,6 +46,7 @@ const MainContainer = () => {
       <div className="Detail-pane-container">
       <DetailPane
         selectedTestCase={selectedTestCase}
+        updateDescription={updateDescription}
       />
       </div>
     </div>

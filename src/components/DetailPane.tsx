@@ -1,9 +1,11 @@
 import { Component, ReactNode } from "react";
 import '../styles/DetailPane.css';
+import Description from "./Description";
 import { TestCaseObject } from "../modules/TestCase";
 
 interface DetailPaneProps {
   selectedTestCase: TestCaseObject;
+  updateDescription: (description: string) => void;
 }
 
 class DetailPane extends Component<DetailPaneProps> {
@@ -16,7 +18,11 @@ class DetailPane extends Component<DetailPaneProps> {
             <h1>{this.props.selectedTestCase.summary}</h1>
           </div>
           <div className="Detail-pane-body">
-            <div>{this.props.selectedTestCase.description}</div>
+          <Description
+              description={this.props.selectedTestCase.description}
+              updateDescription={this.props.updateDescription}
+              disabled={this.props.selectedTestCase.disabled}
+            />
           </div>
           <div className="Detail-pane-footer">
             <button 
