@@ -2,12 +2,12 @@ import { Component, ReactNode } from "react";
 import '../styles/DetailPane.css';
 import Description from "./Description";
 import StepList from "./StepList";
+import TagList from "./TagList";
 import { TestCaseObject } from "../modules/TestCase";
 
 interface DetailPaneProps {
   selectedTestCase: TestCaseObject;
   updateSelectedTestCase: (testCase: TestCaseObject) => void;
-  updateDescription: (description: string) => void;
 }
 
 class DetailPane extends Component<DetailPaneProps> {
@@ -25,6 +25,10 @@ class DetailPane extends Component<DetailPaneProps> {
             updateSelectedTestCase={this.props.updateSelectedTestCase}
           />
           <StepList
+            selectedTestCase={this.props.selectedTestCase}
+            updateSelectedTestCase={this.props.updateSelectedTestCase}
+          />
+          <TagList
             selectedTestCase={this.props.selectedTestCase}
             updateSelectedTestCase={this.props.updateSelectedTestCase}
           />
