@@ -4,8 +4,9 @@ import { TestCaseObject } from "../modules/TestCase";
 import TestCaseInput from "./TestCaseInput";
 
 interface RowProps {
-  testCase: TestCaseObject,
-  selectedTestCase: TestCaseObject
+  testCase: TestCaseObject;
+  selectedTestCase: TestCaseObject;
+  updateTestCaseByKey: (updatedTestCase: TestCaseObject) => void;
 }
 
 class Row extends Component<RowProps> {
@@ -19,7 +20,10 @@ class Row extends Component<RowProps> {
     return (
       <div className={classes}>
         <div className="Test-case-container">
-          <TestCaseInput testCase={this.props.testCase}/>
+          <TestCaseInput
+            testCase={this.props.testCase}
+            updateTestCaseByKey={this.props.updateTestCaseByKey}
+          />
         </div>
       </div>
     )

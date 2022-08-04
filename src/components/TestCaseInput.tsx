@@ -4,6 +4,7 @@ import { TestCaseObject } from '../modules/TestCase';
 
 interface TestCaseInputProps {
   testCase: TestCaseObject;
+  updateTestCaseByKey: (updatedTestCase: TestCaseObject) => void;
 };
 
 class TestCaseInput extends Component<TestCaseInputProps> {
@@ -30,8 +31,21 @@ class TestCaseInput extends Component<TestCaseInputProps> {
     );
   }
 
+  updateTestCaseSummary = (newSummary: string) => {
+    let updatedTestCase = new TestCaseObject(
+      this.props.testCase.key,
+      this.props.testCase.sortId,
+      newSummary,
+      this.props.testCase.description,
+      this.props.testCase.steps,
+      this.props.testCase.tags,
+    )
+    return updatedTestCase;
+  }
+
   handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    console.log(`update summary for "${this.props.testCase.summary}"`);
+    console.log(event);
+    this.updateTestCaseSummary(event.target.value);
   }
 
   handleKeyDown = (event: React.KeyboardEvent) => {
