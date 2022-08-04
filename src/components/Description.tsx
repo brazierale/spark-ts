@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { TestCaseObject } from '../modules/TestCase';
 import '../styles/Description.css';
 
 interface DescriptionProps {
-  description: string;
-  disabled: boolean;
-  updateDescription: (updatedDescription: string) => void;
+  selectedTestCase: TestCaseObject;
+  updateSelectedTestCase: (testCase: TestCaseObject) => void;
 }
 
 // description field
@@ -20,16 +20,19 @@ class Description extends Component<DescriptionProps> {
           className="Description-input"
           rows={4}
           placeholder="Enter new description..."
-          value={this.props.description}
+          value={this.props.selectedTestCase.description}
           onChange={this.handleUserInput}
-          disabled={this.props.disabled}
+          disabled={this.props.selectedTestCase.disabled}
         />
       </div>
     );
   }
   
   handleUserInput = async (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    this.props.updateDescription(event.target.value);
+    this.props.updateSelectedTestCase({
+      ...this.props.selectedTestCase,
+      description:event.target.value
+    })
   }
 }
 

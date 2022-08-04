@@ -5,6 +5,7 @@ import { TestCaseObject } from "../modules/TestCase";
 
 interface DetailPaneProps {
   selectedTestCase: TestCaseObject;
+  updateSelectedTestCase: (testCase: TestCaseObject) => void;
   updateDescription: (description: string) => void;
 }
 
@@ -19,9 +20,8 @@ class DetailPane extends Component<DetailPaneProps> {
           </div>
           <div className="Detail-pane-body">
           <Description
-              description={this.props.selectedTestCase.description}
-              updateDescription={this.props.updateDescription}
-              disabled={this.props.selectedTestCase.disabled}
+              selectedTestCase={this.props.selectedTestCase}
+              updateSelectedTestCase={this.props.updateSelectedTestCase}
             />
           </div>
           <div className="Detail-pane-footer">
