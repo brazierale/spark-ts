@@ -18,12 +18,6 @@ class TestCaseInput extends Component<TestCaseInputProps> {
       'Selected-input': this.props.isSelected
     });
 
-    // this ensures the field remains editable and is not overwritten by the saved state
-    let summary = this.props.testCase.summary;
-    if (this.props.isSelected) {
-      summary = this.props.selectedTestCase.summary;
-    }
-
     return (
       <textarea
         data-testid="test-case-input"
@@ -32,7 +26,7 @@ class TestCaseInput extends Component<TestCaseInputProps> {
         maxLength={255}
         placeholder="Enter your test case here..."
         className={classes}
-        value={summary}
+        value={this.props.testCase.summary}
         onChange={this.handleUserInput}
         onKeyDown={this.handleKeyDown}
         onFocus={this.handleFocus}
@@ -50,11 +44,10 @@ class TestCaseInput extends Component<TestCaseInputProps> {
       this.props.testCase.steps,
       this.props.testCase.tags,
     )
-    return updatedTestCase;
+    this.props.updateTestCaseByKey(updatedTestCase);
   }
 
   handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    console.log(event);
     this.updateTestCaseSummary(event.target.value);
   }
 
@@ -66,7 +59,6 @@ class TestCaseInput extends Component<TestCaseInputProps> {
   }
     
   handleFocus = () => {
-    console.log(`"${this.props.testCase.summary}" selected`);
     if (this.props.selectedTestCase.key !== this.props.testCase.key) {
       this.props.setSelectedTestCaseByKey(this.props.testCase.key);
     }

@@ -14,9 +14,7 @@ const MainContainer = () => {
     let newArray = testCaseList;
     let index = newArray.findIndex( tc => {return tc.key === testCase.key});
 
-    newArray[index] = testCase;
-
-    setTestCaseListState(newArray);
+    setTestCaseListState([...newArray.slice(0, index), testCase, ...newArray.slice(index+1)]);
   }
 
   const setSelectedTestCaseByKey = (key: string) => {
