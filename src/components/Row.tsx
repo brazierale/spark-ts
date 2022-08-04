@@ -22,6 +22,8 @@ class Row extends Component<RowProps> {
         <div className="Test-case-container">
           <TestCaseInput
             testCase={this.props.testCase}
+            selectedTestCase={this.props.selectedTestCase}
+            isSelected={this.isSelected()}
             updateTestCaseByKey={this.props.updateTestCaseByKey}
           />
         </div>

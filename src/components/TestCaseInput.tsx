@@ -4,6 +4,8 @@ import { TestCaseObject } from '../modules/TestCase';
 
 interface TestCaseInputProps {
   testCase: TestCaseObject;
+  selectedTestCase: TestCaseObject;
+  isSelected: Boolean;
   updateTestCaseByKey: (updatedTestCase: TestCaseObject) => void;
 };
 
@@ -14,6 +16,12 @@ class TestCaseInput extends Component<TestCaseInputProps> {
       'Test-case-input': true,
     });
 
+    // this ensures the field remains editable and is not overwritten by the saved state
+    let summary = this.props.testCase.summary;
+    if (this.props.isSelected) {
+      summary = this.props.selectedTestCase.summary;
+    }
+
     return (
       <textarea
         data-testid="test-case-input"
@@ -22,7 +30,7 @@ class TestCaseInput extends Component<TestCaseInputProps> {
         maxLength={255}
         placeholder="Enter your test case here..."
         className={classes}
-        value={this.props.testCase.summary}
+        value={summary}
         onChange={this.handleUserInput}
         onKeyDown={this.handleKeyDown}
         onFocus={this.handleFocus}
