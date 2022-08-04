@@ -30,7 +30,7 @@ const TestCaseInput = ({ testCase, selectedTestCase, isSelected, setSelectedTest
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === 'Tab') {
       event.preventDefault();
-      console.log(`apply change for "${testCase.summary}"`);
+      sendUpdate(selectedTestCase.summary);
     }
   }
     
@@ -43,15 +43,15 @@ const TestCaseInput = ({ testCase, selectedTestCase, isSelected, setSelectedTest
   const sendUpdate = ( summary: string ) => {
     // create new test case if this is the entryRow
     if(testCase.key === 'blank' && summary !== '') {
-      
+      console.log('create a new test case because this is the entryRow')
     }
     // delete the test case if it is empty
     else if (summary === '' && testCase.key !== 'blank') {
-      
+      console.log('delete the test case')
     }
     // otherwise, update the test case
     else if (testCase.key !== 'blank') {
-      
+      console.log('update the existing test case')
     }
   }
 
