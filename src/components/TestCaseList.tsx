@@ -6,6 +6,7 @@ import '../styles/TestCaseList.css';
 interface TestCaseListProps {
   testCases: TestCaseObject[];
   selectedTestCase: TestCaseObject;
+  setSelectedTestCaseByKey: (key: string) => void;
   updateTestCaseByKey: (updatedTestCase: TestCaseObject) => void;
 }
 
@@ -24,6 +25,7 @@ class TestCaseList extends Component<TestCaseListProps> {
         <Row key={testCase.key}
           testCase={testCase}
           selectedTestCase={this.props.selectedTestCase}
+          setSelectedTestCaseByKey={this.props.setSelectedTestCaseByKey}
           updateTestCaseByKey={this.props.updateTestCaseByKey}
         />
       )

@@ -6,6 +6,7 @@ interface TestCaseInputProps {
   testCase: TestCaseObject;
   selectedTestCase: TestCaseObject;
   isSelected: Boolean;
+  setSelectedTestCaseByKey: (key: string) => void;
   updateTestCaseByKey: (updatedTestCase: TestCaseObject) => void;
 };
 
@@ -14,6 +15,7 @@ class TestCaseInput extends Component<TestCaseInputProps> {
     let classes = classNames({
       'Test-case': true,
       'Test-case-input': true,
+      'Selected-input': this.props.isSelected
     });
 
     // this ensures the field remains editable and is not overwritten by the saved state
@@ -65,6 +67,9 @@ class TestCaseInput extends Component<TestCaseInputProps> {
     
   handleFocus = () => {
     console.log(`"${this.props.testCase.summary}" selected`);
+    if (this.props.selectedTestCase.key !== this.props.testCase.key) {
+      this.props.setSelectedTestCaseByKey(this.props.testCase.key);
+    }
   }
 
   sendUpdate = ( summary: string ) => {

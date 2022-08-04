@@ -6,6 +6,7 @@ import TestCaseInput from "./TestCaseInput";
 interface RowProps {
   testCase: TestCaseObject;
   selectedTestCase: TestCaseObject;
+  setSelectedTestCaseByKey: (key: string) => void;
   updateTestCaseByKey: (updatedTestCase: TestCaseObject) => void;
 }
 
@@ -24,6 +25,7 @@ class Row extends Component<RowProps> {
             testCase={this.props.testCase}
             selectedTestCase={this.props.selectedTestCase}
             isSelected={this.isSelected()}
+            setSelectedTestCaseByKey={this.props.setSelectedTestCaseByKey}
             updateTestCaseByKey={this.props.updateTestCaseByKey}
           />
         </div>

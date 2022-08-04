@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import TestCaseList from './TestCaseList';
 import DetailPane from './DetailPane';
 import testCaseListState from '../atoms/TestCaseListState';
@@ -8,7 +8,7 @@ import { TestCaseObject } from '../modules/TestCase';
 const MainContainer = () => {
 
   const [testCaseList, setTestCaseListState] = useRecoilState(testCaseListState);
-  const selectedTestCase = useRecoilValue(selectedTestCaseState);
+  const [selectedTestCase, setSelectedTestCase] = useRecoilState(selectedTestCaseState);
 
   const updateTestCaseByKey = (testCase: TestCaseObject) => {
     let newArray = testCaseList;
@@ -18,6 +18,13 @@ const MainContainer = () => {
 
     setTestCaseListState(newArray);
   }
+
+  const setSelectedTestCaseByKey = (key: string) => {
+    let newArray = testCaseList;
+    let index = newArray.findIndex( tc => {return tc.key === key});
+
+    setSelectedTestCase(testCaseList[index]);
+  }
   
   return(
     <div className="Main-container">
@@ -25,6 +32,7 @@ const MainContainer = () => {
         <TestCaseList
           testCases={testCaseList}
           selectedTestCase={selectedTestCase}
+          setSelectedTestCaseByKey={setSelectedTestCaseByKey}
           updateTestCaseByKey={updateTestCaseByKey}
         />
       </div>
