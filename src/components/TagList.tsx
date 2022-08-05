@@ -73,7 +73,6 @@ class TagList extends Component<TagListProps> {
   }
 
   deleteTag = (tag: string) => {
-    console.log(`deleting tag "${tag}`)
     let newTagList = this.props.selectedTestCase.tags.filter(
       t => t !== tag
     );
