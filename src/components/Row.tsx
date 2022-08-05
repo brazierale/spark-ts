@@ -4,12 +4,15 @@ import TestCaseInput from "./TestCaseInput";
 
 type RowProps = {
   testCase: TestCaseObject;
+  updateTestCaseByKey: (updatedTestCase: TestCaseObject) => void;
+  addTestCase: (testCase: TestCaseObject) => void;
+  deleteTestCaseByKey: (key: string) => void;
   selectedTestCase: TestCaseObject;
   setSelectedTestCaseByKey: (key: string) => void;
-  updateTestCaseByKey: (updatedTestCase: TestCaseObject) => void;
+  updateSelectedTestCase: (testCase: TestCaseObject) => void;
 }
 
-const Row = ({ testCase, selectedTestCase, setSelectedTestCaseByKey, updateTestCaseByKey }: RowProps) => {
+const Row = ({ testCase, updateTestCaseByKey, addTestCase, deleteTestCaseByKey, selectedTestCase, setSelectedTestCaseByKey, updateSelectedTestCase }: RowProps) => {
   
   const isSelected = () => {
     return testCase.key === selectedTestCase.key;
@@ -26,10 +29,13 @@ const Row = ({ testCase, selectedTestCase, setSelectedTestCaseByKey, updateTestC
       <div className="Test-case-container">
         <TestCaseInput
           testCase={testCase}
+          updateTestCaseByKey={updateTestCaseByKey}
+          addTestCase={addTestCase}
+          deleteTestCase={deleteTestCaseByKey}
           selectedTestCase={selectedTestCase}
           isSelected={isSelected()}
           setSelectedTestCaseByKey={setSelectedTestCaseByKey}
-          updateTestCaseByKey={updateTestCaseByKey}
+          updateSelectedTestCase={updateSelectedTestCase}
         />
       </div>
     </div>

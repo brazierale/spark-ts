@@ -3,22 +3,28 @@ import { TestCaseObject } from '../modules/TestCase';
 import '../styles/TestCaseList.css';
 
 interface TestCaseListProps {
-  testCases: TestCaseObject[];
+  testCaseList: TestCaseObject[];
+  updateTestCaseByKey: (updatedTestCase: TestCaseObject) => void;
+  addTestCase: (testCase: TestCaseObject) => void;
+  deleteTestCaseByKey: (key: string) => void;
   selectedTestCase: TestCaseObject;
   setSelectedTestCaseByKey: (key: string) => void;
-  updateTestCaseByKey: (updatedTestCase: TestCaseObject) => void;
+  updateSelectedTestCase: (testCase: TestCaseObject) => void;
 }
 
-const TestCaseList = ({ testCases, selectedTestCase, setSelectedTestCaseByKey, updateTestCaseByKey }: TestCaseListProps) => {
+const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTestCaseByKey, selectedTestCase, setSelectedTestCaseByKey, updateSelectedTestCase }: TestCaseListProps) => {
   
-  const testCasesToRender = ( testCases: TestCaseObject[] ) => {    
+  const testCasesToRender = ( testCaseList: TestCaseObject[] ) => {
     return (
-      testCases.map((testCase) => 
+      testCaseList.map((testCase) => 
         <Row key={testCase.key}
           testCase={testCase}
+          updateTestCaseByKey={updateTestCaseByKey}
+          addTestCase={addTestCase}
+          deleteTestCaseByKey={deleteTestCaseByKey}
           selectedTestCase={selectedTestCase}
           setSelectedTestCaseByKey={setSelectedTestCaseByKey}
-          updateTestCaseByKey={updateTestCaseByKey}
+          updateSelectedTestCase={updateSelectedTestCase}
         />
       )
     );
@@ -26,7 +32,7 @@ const TestCaseList = ({ testCases, selectedTestCase, setSelectedTestCaseByKey, u
 
   return(
     <div data-testid="test-case-list">
-      {testCasesToRender(testCases)}
+      {testCasesToRender(testCaseList)}
     </div>
   );
 }

@@ -3,28 +3,22 @@ import { TestCaseObject } from '../modules/TestCase';
 
 interface TestCaseInputProps {
   testCase: TestCaseObject;
+  updateTestCaseByKey: (updatedTestCase: TestCaseObject) => void;
+  addTestCase: (testCase: TestCaseObject) => void;
+  deleteTestCase: (key: string) => void;
   selectedTestCase: TestCaseObject;
   isSelected: Boolean;
   setSelectedTestCaseByKey: (key: string) => void;
-  updateTestCaseByKey: (updatedTestCase: TestCaseObject) => void;
+  updateSelectedTestCase: (testCase: TestCaseObject) => void;
 };
 
-const TestCaseInput = ({ testCase, selectedTestCase, isSelected, setSelectedTestCaseByKey, updateTestCaseByKey }: TestCaseInputProps) => {
-
-  const updateTestCaseSummary = (newSummary: string) => {
-    let updatedTestCase = new TestCaseObject(
-      testCase.key,
-      testCase.sortId,
-      newSummary,
-      testCase.description,
-      testCase.steps,
-      testCase.tags,
-    )
-    updateTestCaseByKey(updatedTestCase);
-  }
+const TestCaseInput = ({ testCase, updateTestCaseByKey, addTestCase, deleteTestCase, selectedTestCase, isSelected, setSelectedTestCaseByKey, updateSelectedTestCase }: TestCaseInputProps) => {
 
   const handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    updateTestCaseSummary(event.target.value);
+    updateSelectedTestCase({
+      ...selectedTestCase,
+      summary: event.target.value
+    })
   }
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -42,16 +36,19 @@ const TestCaseInput = ({ testCase, selectedTestCase, isSelected, setSelectedTest
 
   const sendUpdate = ( summary: string ) => {
     // create new test case if this is the entryRow
-    if(testCase.key === 'blank' && summary !== '') {
-      console.log('create a new test case because this is the entryRow')
+    if(selectedTestCase.key === 'blank' && summary !== '') {
+      addTestCase(selectedTestCase);
     }
     // delete the test case if it is empty
-    else if (summary === '' && testCase.key !== 'blank') {
-      console.log('delete the test case')
+    else if (summary === '' && selectedTestCase.key !== 'blank') {
+      deleteTestCase(selectedTestCase.key);
     }
     // otherwise, update the test case
-    else if (testCase.key !== 'blank') {
-      console.log('update the existing test case')
+    else if (selectedTestCase.key !== 'blank') {
+      updateTestCaseByKey({
+        ...selectedTestCase,
+        summary: summary
+      })
     }
   }
 
@@ -61,6 +58,12 @@ const TestCaseInput = ({ testCase, selectedTestCase, isSelected, setSelectedTest
     'Selected-input': isSelected
   });
 
+  // this ensures the field remains editable
+  let summary = testCase.summary;
+  if (isSelected) {
+    summary = selectedTestCase.summary;
+  }
+
   return (
     <textarea
       data-testid="test-case-input"
@@ -69,7 +72,7 @@ const TestCaseInput = ({ testCase, selectedTestCase, isSelected, setSelectedTest
       maxLength={255}
       placeholder="Enter your test case here..."
       className={classes}
-      value={testCase.summary}
+      value={summary}
       onChange={handleUserInput}
       onKeyDown={handleKeyDown}
       onFocus={handleFocus}
