@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import { TestCaseObject } from "../modules/TestCase";
+import TestCaseDelete from "./TestCaseDelete";
 import TestCaseInput from "./TestCaseInput";
+import TestCaseMove from "./TestCaseMove";
 
 type RowProps = {
   testCase: TestCaseObject;
@@ -38,6 +40,16 @@ const Row = ({ testCase, updateTestCaseByKey, addTestCase, deleteTestCaseByKey, 
           updateSelectedTestCase={updateSelectedTestCase}
         />
       </div>
+      <div >
+        <TestCaseMove
+          testCase={testCase}
+          
+        />
+      </div>
+      <TestCaseDelete
+        testCase={testCase}
+        deleteTestCaseByKey={deleteTestCaseByKey}
+      />
     </div>
   )
 }
