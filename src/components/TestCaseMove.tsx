@@ -4,10 +4,11 @@ import { TestCaseObject } from '../modules/TestCase';
 
 type MoveTestCaseProps = {
   testCase: TestCaseObject
+  setDragEnabledStatus: (status: boolean) => void;
 }
 
 // icon to reorder test case, currently only visual
-const TestCaseMove = ({ testCase }: MoveTestCaseProps) => {
+const TestCaseMove = ({ testCase, setDragEnabledStatus }: MoveTestCaseProps) => {
   if (testCase.key !== 'blank' && testCase.disabled !== true) {
     return (
       <FontAwesomeIcon
@@ -15,12 +16,22 @@ const TestCaseMove = ({ testCase }: MoveTestCaseProps) => {
         className="Move-row"
         icon={faArrowsAlt}
         size="sm"
+        onMouseDown={() => enableMove(setDragEnabledStatus)}
+        onMouseLeave={() => disableMove(setDragEnabledStatus)}
       />
     );
   }
   else {
     return null;
   }
+};
+
+const enableMove = (setDragEnabledStatus: (status: boolean) => void)  => {
+  setDragEnabledStatus(true);
+};
+
+const disableMove = (setDragEnabledStatus: (status: boolean) => void) => {
+  setDragEnabledStatus(false);
 };
 
 export default TestCaseMove;
