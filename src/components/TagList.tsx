@@ -1,103 +1,99 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import Tag from './Tag';
 import { TestCaseObject } from '../modules/TestCase';
 import '../styles/Tag.css';
 
-interface TagListProps {
+type TagListProps = {
   selectedTestCase: TestCaseObject;
   updateSelectedTestCase: (testCase: TestCaseObject) => void;
 };
 
 // list of tags
-class TagList extends Component<TagListProps> {
-  state = {
-    newTag: ''
-  }
+const TagList = ({selectedTestCase, updateSelectedTestCase}: TagListProps) => {
+  const [newTag, setNewTag] = useState({name: ''});
 
-  render() {
-    let key = 0;
-    const tagsToRender = this.props.selectedTestCase.tags.map( tag => 
-      <Tag
-        key={key++} 
-        tagName={tag}
-        deleteTag={this.deleteTag}
-        disabled={this.props.selectedTestCase.disabled}
-      />
-    );
-
-    let listClasses = classNames({
-      'Tag-list': true,
-      'Disabled': this.props.selectedTestCase.disabled
-    });
-
-    return(
-      <div data-testid="tag-list" className="Tag-list-container">
-        <span className="Label">Tags</span>
-        <span className={listClasses}>
-          {tagsToRender}
-          <textarea
-            data-testid="tag-new"
-            className="Tag-input"
-            rows={1}
-            wrap="off"
-            placeholder="Enter new tag..."
-            value={this.state.newTag}
-            onChange={this.handleUserInput}
-            onKeyDown={this.handleKeyDown}
-            onBlur={this.handleBlur}
-            disabled={this.props.selectedTestCase.disabled}
-          />
-        </span>
-      </div>
-    );
-  }
-
-  addTag = (tag: string) => {
+  const addTag = (tag: string) => {
     // only add if it is not a duplicate
     const isDuplicate = ( element: string ) => {
       return element === tag;
     };
-    let newTagList = [...this.props.selectedTestCase.tags];
+    let newTagList = [...selectedTestCase.tags];
         
     // only add if it is not a duplicate
-    if (!this.props.selectedTestCase.tags.some(isDuplicate)) {
-      newTagList = [...this.props.selectedTestCase.tags, tag];
+    if (!selectedTestCase.tags.some(isDuplicate)) {
+      newTagList = [...selectedTestCase.tags, tag];
 
     }
 
-    this.props.updateSelectedTestCase({
-      ...this.props.selectedTestCase,
+    updateSelectedTestCase({
+      ...selectedTestCase,
       tags: newTagList
     });
   }
 
-  deleteTag = (tag: string) => {
-    let newTagList = this.props.selectedTestCase.tags.filter(
+  const deleteTag = (tag: string) => {
+    let newTagList = selectedTestCase.tags.filter(
       t => t !== tag
     );
 
-    this.props.updateSelectedTestCase({
-      ...this.props.selectedTestCase,
+    updateSelectedTestCase({
+      ...selectedTestCase,
       tags: newTagList
     })
   }
 
-  handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    this.setState({ newTag: event.target.value});
+  const handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNewTag({ name: event.target.value});
   }
 
-  handleKeyDown = (event: React.KeyboardEvent) => {
+  const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === 'Tab') {
       event.preventDefault();
-      this.addTag(this.state.newTag);
-      this.setState({ newTag: '' });
+      addTag(newTag.name);
+      setNewTag({ name: '' });
     }
   }
 
-  handleBlur = () => {
-    this.setState({ newTag: '' });
+  const handleBlur = () => {
+    setNewTag({ name: '' });
   }
+
+  let key = 0;
+  const tagsToRender = selectedTestCase.tags.map( tag => 
+    <Tag
+      key={key++} 
+      tagName={tag}
+      deleteTag={deleteTag}
+      disabled={selectedTestCase.disabled}
+    />
+  );
+
+  let listClasses = classNames({
+    'Tag-list': true,
+    'Disabled': selectedTestCase.disabled
+  });
+
+  return(
+    <div data-testid="tag-list" className="Tag-list-container">
+      <span className="Label">Tags</span>
+      <span className={listClasses}>
+        {tagsToRender}
+        <textarea
+          data-testid="tag-new"
+          className="Tag-input"
+          rows={1}
+          wrap="off"
+          placeholder="Enter new tag..."
+          value={newTag.name}
+          onChange={handleUserInput}
+          onKeyDown={handleKeyDown}
+          onBlur={handleBlur}
+          disabled={selectedTestCase.disabled}
+        />
+      </span>
+    </div>
+  );
 }
 
 export default TagList;
