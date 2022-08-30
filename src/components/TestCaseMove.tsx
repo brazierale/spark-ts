@@ -4,11 +4,11 @@ import { TestCaseObject } from '../modules/TestCase';
 
 type MoveTestCaseProps = {
   testCase: TestCaseObject
-  setDragEnabledStatus: (status: boolean) => void;
+  setDragEnabled: (isDragEnabled: boolean) => void;
 }
 
 // icon to reorder test case, currently only visual
-const TestCaseMove = ({ testCase, setDragEnabledStatus }: MoveTestCaseProps) => {
+const TestCaseMove = ({ testCase, setDragEnabled }: MoveTestCaseProps) => {
   if (testCase.key !== 'blank' && testCase.disabled !== true) {
     return (
       <FontAwesomeIcon
@@ -16,8 +16,8 @@ const TestCaseMove = ({ testCase, setDragEnabledStatus }: MoveTestCaseProps) => 
         className="Move-row"
         icon={faArrowsAlt}
         size="sm"
-        onMouseDown={() => enableMove(setDragEnabledStatus)}
-        onMouseLeave={() => disableMove(setDragEnabledStatus)}
+        onMouseDown={() => enableMove(setDragEnabled)}
+        onMouseLeave={() => disableMove(setDragEnabled)}
       />
     );
   }
@@ -26,12 +26,12 @@ const TestCaseMove = ({ testCase, setDragEnabledStatus }: MoveTestCaseProps) => 
   }
 };
 
-const enableMove = (setDragEnabledStatus: (status: boolean) => void)  => {
-  setDragEnabledStatus(true);
+const enableMove = (setDragEnabled: (isDragEnabled: boolean) => void)  => {
+  setDragEnabled(true);
 };
 
-const disableMove = (setDragEnabledStatus: (status: boolean) => void) => {
-  setDragEnabledStatus(false);
+const disableMove = (setDragEnabled: (isDragEnabled: boolean) => void) => {
+  setDragEnabled(false);
 };
 
 export default TestCaseMove;

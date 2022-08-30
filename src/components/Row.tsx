@@ -19,6 +19,7 @@ interface RowProps {
   connectDragSource: (element: ReactNode) => ReactNode;
   connectDropTarget: (element: ReactNode) => ReactNode;
   dragEnabled: boolean;
+  setDragEnabled: (dragEnabled: boolean) => void;
   isDragging: boolean;
   isOver: boolean;
 }
@@ -34,9 +35,9 @@ render(): ReactNode {
     selectedTestCase,
     setSelectedTestCaseByKey,
     updateSelectedTestCase,
-    moveAboveSortId,
     connectDragSource,
     connectDropTarget,
+    setDragEnabled,
     isDragging,
     isOver
   } = this.props
@@ -70,7 +71,7 @@ render(): ReactNode {
         <div >
           <TestCaseMove
             testCase={testCase}
-  
+            setDragEnabled={setDragEnabled}
           />
         </div>
         <TestCaseDelete
@@ -122,7 +123,9 @@ const collectDrop = (connect: DropTargetConnector, monitor: DropTargetMonitor) =
   };
 };
 
+// @ts-ignore
 const draggableRow = DragSource(ItemTypes.TEST_CASE, testCaseSource, collectDrag)(Row);
+// @ts-ignore
 const targetableRow = DropTarget(ItemTypes.TEST_CASE, testCaseTarget, collectDrop)(draggableRow);
 
 export default targetableRow;

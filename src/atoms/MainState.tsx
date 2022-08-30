@@ -1,18 +1,16 @@
 import { atom } from 'recoil';
 
-type MainState = {
-  loading: boolean;
-  saving: boolean;
-  dragEnabled: boolean;
-}
-
-const mainState = atom<MainState>({
-  key: 'mainState',
-  default: {
-    loading: false,
-    saving: false,
-    dragEnabled: false
-  }
+export const loading = atom<boolean>({
+  key: 'loading',
+  default: false
 })
 
-export default mainState;
+export const saving = atom<boolean>({
+  key: 'saving',
+  default: false
+})
+
+export const dragEnabled = atom<boolean>({
+  key: 'dragEnabled',
+  default: false
+})

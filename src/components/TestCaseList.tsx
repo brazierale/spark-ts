@@ -1,6 +1,8 @@
+import { useRecoilState } from 'recoil';
 import Row from './Row';
-import { TestCaseObject } from '../modules/TestCase';
+import { blankTestCase, TestCaseObject } from '../modules/TestCase';
 import '../styles/TestCaseList.css';
+import { dragEnabled } from '../atoms/MainState';
 
 interface TestCaseListProps {
   testCaseList: TestCaseObject[];
@@ -14,6 +16,23 @@ interface TestCaseListProps {
 
 const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTestCaseByKey, selectedTestCase, setSelectedTestCaseByKey, updateSelectedTestCase }: TestCaseListProps) => {
   
+  const [isDragEnabled, setDragEnabledState] = useRecoilState(dragEnabled);
+
+  const setDragEnabled = (isEnabled: boolean) => {
+    setDragEnabledState(isEnabled);
+  }
+
+  const moveAboveSortId = ( key: string ) => {
+    // get the numbers either side of the new position and pick a sortId between them
+    let thisIndex = testCaseList.findIndex( tc => {return tc.key === key;});
+    let toMoveAbove = testCaseList[thisIndex];
+    let toMoveBelow = testCaseList[thisIndex-1];
+
+    if (!toMoveBelow) { toMoveBelow = blankTestCase(); }
+        
+    return ( toMoveAbove.sortId + toMoveBelow.sortId) / 2;
+  }
+
   const testCasesToRender = ( testCaseList: TestCaseObject[] ) => {
     return (
       testCaseList.map((testCase) => 
@@ -25,6 +44,9 @@ const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTe
           selectedTestCase={selectedTestCase}
           setSelectedTestCaseByKey={setSelectedTestCaseByKey}
           updateSelectedTestCase={updateSelectedTestCase}
+          moveAboveSortId={moveAboveSortId}
+          dragEnabled={isDragEnabled}
+          setDragEnabled={setDragEnabled}
         />
       )
     );
