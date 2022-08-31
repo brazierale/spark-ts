@@ -24,13 +24,6 @@ const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTe
   }
 
   const moveTestCase = (testCaseToMove: TestCaseObject, newSortId: number) => {
-    //
-    // take the list of test cases
-    // update the dropped test case sortId
-    
-    // move testCase to new position
-    // +1 to all latter cases
-
     // remove the test case we've been given as it will move
     const listWithRemovedTestCase = [...testCaseList.slice(0, testCaseToMove.sortId), ...testCaseList.slice(testCaseToMove.sortId+1)];
     // place the test case into its new position
