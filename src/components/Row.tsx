@@ -88,7 +88,6 @@ render(): ReactNode {
 // actions to carry out when drag starts
 const testCaseSource = {
   beginDrag(props: RowProps) {
-    console.log('dragging' + props.testCase.summary)
     return {testCase: props.testCase}
   },
   canDrag(props: RowProps) {
@@ -100,9 +99,12 @@ const testCaseSource = {
 const testCaseTarget = {
   drop(props: RowProps, monitor: DropTargetMonitor) {
     // get the test case we're dropping
-    let testCaseToMove = monitor.getItem().testCase;
     // current this is the row being dropped onto, so get the Id to sort above
-    testCaseToMove.sortId = props.moveAboveSortId(props.testCase.key);
+    let testCaseToMove = {
+      ...monitor.getItem().testCase,
+      sortId: props.moveAboveSortId(props.testCase.key)
+    }
+    console.log(testCaseToMove)
     props.updateTestCaseByKey(testCaseToMove);
   }
 };

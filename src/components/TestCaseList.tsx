@@ -33,9 +33,25 @@ const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTe
     return ( toMoveAbove.sortId + toMoveBelow.sortId) / 2;
   }
 
+  const sortBySortId = ( a: TestCaseObject, b: TestCaseObject ) => {
+    if (a.sortId < b.sortId) {
+      return -1;
+    }
+    if (a.sortId > b.sortId) {
+      return 1;
+    }
+    else {
+      return 0;
+    }
+  }
+
   const testCasesToRender = ( testCaseList: TestCaseObject[] ) => {
+    
+    let sortedTestCaseList = [...testCaseList]
+    sortedTestCaseList.sort((a, b) => sortBySortId(a, b));
+
     return (
-      testCaseList.map((testCase) => 
+      sortedTestCaseList.map((testCase) => 
         <Row key={testCase.key}
           testCase={testCase}
           updateTestCaseByKey={updateTestCaseByKey}
