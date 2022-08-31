@@ -31,7 +31,18 @@ const MainContainer = () => {
 
   const deleteTestCaseByKey = (key: string) => {
     let index = testCaseList.findIndex( tc => {return tc.key === key});
+    let listWithRemovedTestCase = [...testCaseList.slice(0, index), ...testCaseList.slice(index+1)];
     let newTestCaseList = [...testCaseList.slice(0, index), ...testCaseList.slice(index+1)];
+    const newList = []
+    for (let i=0; i < listWithRemovedTestCase.length; i++) {
+      if (listWithRemovedTestCase[i].key === 'blank') {
+        newList.push(listWithRemovedTestCase[i]);
+      }
+      else {
+        let updatedTestCase = { ...listWithRemovedTestCase[i], sortId: i }
+        newList.push(updatedTestCase)
+      }
+    }
 
     setTestCaseListState(newTestCaseList);
     setSelectedTestCase(testCaseList[index+1]);
