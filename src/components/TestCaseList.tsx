@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 import Row from './Row';
-import { blankTestCase, TestCaseObject } from '../modules/TestCase';
+import { TestCaseObject } from '../modules/TestCase';
 import '../styles/TestCaseList.css';
 import { dragEnabled } from '../atoms/MainState';
 
@@ -12,9 +12,10 @@ interface TestCaseListProps {
   selectedTestCase: TestCaseObject;
   setSelectedTestCaseByKey: (key: string) => void;
   updateSelectedTestCase: (testCase: TestCaseObject) => void;
+  setTestListCaseState: (testCaseList: TestCaseObject[]) => void;
 }
 
-const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTestCaseByKey, selectedTestCase, setSelectedTestCaseByKey, updateSelectedTestCase }: TestCaseListProps) => {
+const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTestCaseByKey, selectedTestCase, setSelectedTestCaseByKey, updateSelectedTestCase, setTestListCaseState }: TestCaseListProps) => {
   
   const [isDragEnabled, setDragEnabledState] = useRecoilState(dragEnabled);
 
@@ -22,15 +23,31 @@ const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTe
     setDragEnabledState(isEnabled);
   }
 
-  const moveAboveSortId = ( key: string ) => {
-    // get the numbers either side of the new position and pick a sortId between them
-    let thisIndex = testCaseList.findIndex( tc => {return tc.key === key;});
-    let toMoveAbove = testCaseList[thisIndex];
-    let toMoveBelow = testCaseList[thisIndex-1];
+  const moveTestCase = (testCaseToMove: TestCaseObject, newSortId: number) => {
+    //
+    // take the list of test cases
+    // update the dropped test case sortId
+    
+    // move testCase to new position
+    // +1 to all latter cases
 
-    if (!toMoveBelow) { toMoveBelow = blankTestCase(); }
-        
-    return ( toMoveAbove.sortId + toMoveBelow.sortId) / 2;
+    // remove the test case we've been given as it will move
+    const listWithRemovedTestCase = [...testCaseList.slice(0, testCaseToMove.sortId), ...testCaseList.slice(testCaseToMove.sortId+1)];
+    // place the test case into its new position
+    const listWithNewPosition = [...listWithRemovedTestCase.slice(0, newSortId), testCaseToMove, ...listWithRemovedTestCase.slice(newSortId)];
+    // update the sort ids to match their position, except the last test case (always blank)
+    const newList = []
+    for (let i=0; i < listWithNewPosition.length; i++) {
+      if (listWithNewPosition[i].key === 'blank') {
+        newList.push(listWithNewPosition[i]);
+      }
+      else {
+        let updatedTestCase = { ...listWithNewPosition[i], sortId: i }
+        newList.push(updatedTestCase)
+      }
+    }
+
+    setTestListCaseState(newList);
   }
 
   const sortBySortId = ( a: TestCaseObject, b: TestCaseObject ) => {
@@ -60,7 +77,7 @@ const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTe
           selectedTestCase={selectedTestCase}
           setSelectedTestCaseByKey={setSelectedTestCaseByKey}
           updateSelectedTestCase={updateSelectedTestCase}
-          moveAboveSortId={moveAboveSortId}
+          moveTestCase={moveTestCase}
           dragEnabled={isDragEnabled}
           setDragEnabled={setDragEnabled}
         />

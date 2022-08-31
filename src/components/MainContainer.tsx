@@ -4,7 +4,7 @@ import DetailPane from './DetailPane';
 import testCaseListState from '../atoms/TestCaseListState';
 import selectedTestCaseState from '../atoms/SelectedTestCaseState';
 import { blankTestCase, TestCaseObject } from '../modules/TestCase';
-import { generateKey, generateSortId } from '../modules/KeyGen';
+import { generateKey } from '../modules/KeyGen';
 
 const MainContainer = () => {
 
@@ -49,12 +49,10 @@ const MainContainer = () => {
 
   const nextSortId = () => {
     if (testCaseList[testCaseList.length-2]) {
-      return generateSortId(
-        testCaseList[testCaseList.length-2].sortId
-      );
+      return testCaseList[testCaseList.length-2].sortId + 1;
     }
     else {
-      return generateSortId(0);
+      return 0;
     }
   }
   
@@ -69,6 +67,7 @@ const MainContainer = () => {
           selectedTestCase={selectedTestCase}
           setSelectedTestCaseByKey={setSelectedTestCaseByKey}
           updateSelectedTestCase={updateSelectedTestCase}
+          setTestListCaseState={setTestCaseListState}
         />
       </div>
       <div className="Detail-pane-container">

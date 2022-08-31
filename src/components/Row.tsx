@@ -15,7 +15,7 @@ interface RowProps {
   selectedTestCase: TestCaseObject;
   setSelectedTestCaseByKey: (key: string) => void;
   updateSelectedTestCase: (testCase: TestCaseObject) => void;
-  moveAboveSortId: (key: string) => void;
+  moveTestCase: (testCaseToMove: TestCaseObject, newSortId: number) => void;
   connectDragSource: (element: ReactNode) => ReactNode;
   connectDropTarget: (element: ReactNode) => ReactNode;
   dragEnabled: boolean;
@@ -98,14 +98,10 @@ const testCaseSource = {
 // actions to carry out when item is dropped
 const testCaseTarget = {
   drop(props: RowProps, monitor: DropTargetMonitor) {
-    // get the test case we're dropping
-    // current this is the row being dropped onto, so get the Id to sort above
-    let testCaseToMove = {
-      ...monitor.getItem().testCase,
-      sortId: props.moveAboveSortId(props.testCase.key)
-    }
-    console.log(testCaseToMove)
-    props.updateTestCaseByKey(testCaseToMove);
+    // don't move if we're trying to move onto the blank test case
+    if (monitor.getItem().testCase.key !== 'blank') {
+      props.moveTestCase(monitor.getItem().testCase, props.testCase.sortId );
+    };
   }
 };
 
