@@ -20,8 +20,7 @@ const MainContainer = () => {
   const addTestCase = (testCase: TestCaseObject) => {
     let newTestCase = {
       ...testCase,
-      key: generateKey(),
-      sortId: nextSortId()
+      key: generateKey()
     }
     let index = testCaseList.findIndex( tc => {return tc.key === testCase.key});
     setTestCaseListState([...testCaseList.slice(0, index), newTestCase, ...testCaseList.slice(index+1), blankTestCase()]);
@@ -32,19 +31,8 @@ const MainContainer = () => {
   const deleteTestCaseByKey = (key: string) => {
     let index = testCaseList.findIndex( tc => {return tc.key === key});
     let listWithRemovedTestCase = [...testCaseList.slice(0, index), ...testCaseList.slice(index+1)];
-    let newTestCaseList = [...testCaseList.slice(0, index), ...testCaseList.slice(index+1)];
-    const newList = []
-    for (let i=0; i < listWithRemovedTestCase.length; i++) {
-      if (listWithRemovedTestCase[i].key === 'blank') {
-        newList.push(listWithRemovedTestCase[i]);
-      }
-      else {
-        let updatedTestCase = { ...listWithRemovedTestCase[i], sortId: i }
-        newList.push(updatedTestCase)
-      }
-    }
 
-    setTestCaseListState(newTestCaseList);
+    setTestCaseListState(listWithRemovedTestCase);
     setSelectedTestCase(testCaseList[index+1]);
   }
 
@@ -56,15 +44,6 @@ const MainContainer = () => {
 
   const updateSelectedTestCase = (testCase: TestCaseObject) => {
     setSelectedTestCase(testCase);
-  }
-
-  const nextSortId = () => {
-    if (testCaseList[testCaseList.length-2]) {
-      return testCaseList[testCaseList.length-2].sortId + 1;
-    }
-    else {
-      return 0;
-    }
   }
   
   return(

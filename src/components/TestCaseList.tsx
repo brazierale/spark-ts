@@ -23,45 +23,27 @@ const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTe
     setDragEnabledState(isEnabled);
   }
 
-  const moveTestCase = (testCaseToMove: TestCaseObject, newSortId: number) => {
-    // remove the test case we've been given as it will move
-    const listWithRemovedTestCase = [...testCaseList.slice(0, testCaseToMove.sortId), ...testCaseList.slice(testCaseToMove.sortId+1)];
-    // place the test case into its new position
-    const listWithNewPosition = [...listWithRemovedTestCase.slice(0, newSortId), testCaseToMove, ...listWithRemovedTestCase.slice(newSortId)];
-    // update the sort ids to match their position, except the last test case (always blank)
-    const newList = []
-    for (let i=0; i < listWithNewPosition.length; i++) {
-      if (listWithNewPosition[i].key === 'blank') {
-        newList.push(listWithNewPosition[i]);
+  const moveTestCase = (toMove: TestCaseObject, moveTo: TestCaseObject) => {
+    let moveToIndex = testCaseList.findIndex( tc => {return tc.key === moveTo.key});
+    let toMoveIndex = testCaseList.findIndex( tc => {return tc.key === toMove.key});
+    
+    // don't move if the dropTarget is the blank test case
+    if (moveToIndex !== testCaseList.length) {
+      const listWithRemovedTestCase = [...testCaseList.slice(0, toMoveIndex), ...testCaseList.slice(toMoveIndex+1)];
+      // if moving down the list, indicies will have changed
+      if (moveToIndex > toMoveIndex) {
+        moveToIndex--;
       }
-      else {
-        let updatedTestCase = { ...listWithNewPosition[i], sortId: i }
-        newList.push(updatedTestCase)
-      }
-    }
-
-    setTestListCaseState(newList);
-  }
-
-  const sortBySortId = ( a: TestCaseObject, b: TestCaseObject ) => {
-    if (a.sortId < b.sortId) {
-      return -1;
-    }
-    if (a.sortId > b.sortId) {
-      return 1;
-    }
-    else {
-      return 0;
+      const listWithNewPosition = [...listWithRemovedTestCase.slice(0, moveToIndex), toMove, ...listWithRemovedTestCase.slice(moveToIndex)];
+      
+      setTestListCaseState(listWithNewPosition);
     }
   }
 
   const testCasesToRender = ( testCaseList: TestCaseObject[] ) => {
-    
-    let sortedTestCaseList = [...testCaseList]
-    sortedTestCaseList.sort((a, b) => sortBySortId(a, b));
 
     return (
-      sortedTestCaseList.map((testCase) => 
+      testCaseList.map((testCase) => 
         <Row key={testCase.key}
           testCase={testCase}
           updateTestCaseByKey={updateTestCaseByKey}
