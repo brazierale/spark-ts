@@ -5,7 +5,6 @@ const selectedTestCaseState = atom<TestCaseObject>({
   key: 'selectedTestCase',
   default: new TestCaseObject(
     'keyTest',
-      1,
       'Default test case',
       'This is displayed but actually no test case is selected by default',
       [],

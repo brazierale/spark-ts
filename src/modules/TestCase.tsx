@@ -10,7 +10,6 @@ export class StepObject {
 
 export class TestCaseObject {
   key: string;
-  sortId: number;
   summary: string;
   description: string;
   steps: StepObject[];
@@ -19,7 +18,6 @@ export class TestCaseObject {
 
   constructor(
     key: string,
-    sortId: number,
     summary: string,
     description: string,
     steps: StepObject[],
@@ -27,7 +25,6 @@ export class TestCaseObject {
   )
   {
     this.key = key;
-    this.sortId = sortId;
     this.summary = summary;
     this.description = description;
     this.steps = steps;
@@ -39,7 +36,6 @@ export class TestCaseObject {
 export function blankTestCase() {
   return new TestCaseObject(
     'blank',
-    9999999,
     '',
     '',
     [],

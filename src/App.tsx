@@ -1,15 +1,17 @@
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import MainContainer from './components/MainContainer';
 import './styles/App.css'
 import logo from './styles/small-header.svg';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <Header />
-      <MainContainer />
+        <Header />
+        <MainContainer />
     </div>
   );
-}
+};
 
 const Header = () => {
   return (
@@ -21,4 +23,4 @@ const Header = () => {
   );
 }
 
-export default App;
+export default DragDropContext(HTML5Backend)(App);

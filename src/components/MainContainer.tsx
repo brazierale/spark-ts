@@ -4,7 +4,7 @@ import DetailPane from './DetailPane';
 import testCaseListState from '../atoms/TestCaseListState';
 import selectedTestCaseState from '../atoms/SelectedTestCaseState';
 import { blankTestCase, TestCaseObject } from '../modules/TestCase';
-import { generateKey, generateSortId } from '../modules/KeyGen';
+import { generateKey } from '../modules/KeyGen';
 
 const MainContainer = () => {
 
@@ -20,8 +20,7 @@ const MainContainer = () => {
   const addTestCase = (testCase: TestCaseObject) => {
     let newTestCase = {
       ...testCase,
-      key: generateKey(),
-      sortId: nextSortId()
+      key: generateKey()
     }
     let index = testCaseList.findIndex( tc => {return tc.key === testCase.key});
     setTestCaseListState([...testCaseList.slice(0, index), newTestCase, ...testCaseList.slice(index+1), blankTestCase()]);
@@ -31,9 +30,9 @@ const MainContainer = () => {
 
   const deleteTestCaseByKey = (key: string) => {
     let index = testCaseList.findIndex( tc => {return tc.key === key});
-    let newTestCaseList = [...testCaseList.slice(0, index), ...testCaseList.slice(index+1)];
+    let listWithRemovedTestCase = [...testCaseList.slice(0, index), ...testCaseList.slice(index+1)];
 
-    setTestCaseListState(newTestCaseList);
+    setTestCaseListState(listWithRemovedTestCase);
     setSelectedTestCase(testCaseList[index+1]);
   }
 
@@ -45,17 +44,6 @@ const MainContainer = () => {
 
   const updateSelectedTestCase = (testCase: TestCaseObject) => {
     setSelectedTestCase(testCase);
-  }
-
-  const nextSortId = () => {
-    if (testCaseList[testCaseList.length-2]) {
-      return generateSortId(
-        testCaseList[testCaseList.length-2].sortId
-      );
-    }
-    else {
-      return generateSortId(0);
-    }
   }
   
   return(
@@ -69,6 +57,7 @@ const MainContainer = () => {
           selectedTestCase={selectedTestCase}
           setSelectedTestCaseByKey={setSelectedTestCaseByKey}
           updateSelectedTestCase={updateSelectedTestCase}
+          setTestListCaseState={setTestCaseListState}
         />
       </div>
       <div className="Detail-pane-container">
