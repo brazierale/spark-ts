@@ -1,15 +1,22 @@
 import { useRecoilState } from 'recoil';
 import TestCaseList from './TestCaseList';
+import axios from 'axios';
 import DetailPane from './DetailPane';
 import testCaseListState from '../atoms/TestCaseListState';
 import selectedTestCaseState from '../atoms/SelectedTestCaseState';
 import { blankTestCase, TestCaseObject } from '../modules/TestCase';
 import { generateKey } from '../modules/KeyGen';
+import { saving, loading } from '../atoms/MainState';
+import Indicator from './Indicator';
+
+const baseUrl = "http://localhost:3001"
 
 const MainContainer = () => {
 
   const [testCaseList, setTestCaseListState] = useRecoilState(testCaseListState);
   const [selectedTestCase, setSelectedTestCase] = useRecoilState(selectedTestCaseState);
+  const [isSaving, setIsSaving] = useRecoilState(saving);
+  const [isLoading] = useRecoilState(loading);
 
   const updateTestCaseByKey = (testCase: TestCaseObject) => {
     let index = testCaseList.findIndex( tc => {return tc.key === testCase.key});
@@ -23,9 +30,22 @@ const MainContainer = () => {
       key: generateKey()
     }
     let index = testCaseList.findIndex( tc => {return tc.key === testCase.key});
-    setTestCaseListState([...testCaseList.slice(0, index), newTestCase, ...testCaseList.slice(index+1), blankTestCase()]);
 
+    postTestCase(newTestCase);
+    setTestCaseListState([...testCaseList.slice(0, index), newTestCase, ...testCaseList.slice(index+1), blankTestCase()]);
     setSelectedTestCaseByKey('blank');
+  }
+
+  const postTestCase = async (testCase: TestCaseObject) => {
+    setIsSaving(true);
+    await axios.post(`${baseUrl}/api/testCases`, {
+      key: testCase.key,
+      summary: testCase.summary,
+      description: testCase.description,
+      steps: testCase.steps,
+      tags: testCase.tags
+    })
+    setIsSaving(false);
   }
 
   const deleteTestCaseByKey = (key: string) => {
@@ -48,6 +68,10 @@ const MainContainer = () => {
   
   return(
     <div className="Main-container">
+      <Indicator
+          loading={isLoading}
+          saving={isSaving}
+        />
       <div className="Test-case-list-container">
         <TestCaseList
           testCaseList={testCaseList}
