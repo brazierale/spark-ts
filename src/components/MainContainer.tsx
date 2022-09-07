@@ -21,7 +21,21 @@ const MainContainer = () => {
   const updateTestCaseByKey = (testCase: TestCaseObject) => {
     let index = testCaseList.findIndex( tc => {return tc.key === testCase.key});
 
+    updateTestCaseByKeyApi(testCase);
     setTestCaseListState([...testCaseList.slice(0, index), testCase, ...testCaseList.slice(index+1)]);
+  }
+
+  const updateTestCaseByKeyApi = async (testCase: TestCaseObject) => {
+    setIsSaving(true);
+    await axios.put(`${baseUrl}/api/testCases/${testCase.key}`, {
+      update: {
+        summary: testCase.summary,
+        description: testCase.description,
+        steps: testCase.steps,
+        tags: testCase.tags
+      }
+    })
+    setIsSaving(false);
   }
 
   const addTestCase = (testCase: TestCaseObject) => {
@@ -31,12 +45,12 @@ const MainContainer = () => {
     }
     let index = testCaseList.findIndex( tc => {return tc.key === testCase.key});
 
-    postTestCase(newTestCase);
+    addTestCaseApi(newTestCase);
     setTestCaseListState([...testCaseList.slice(0, index), newTestCase, ...testCaseList.slice(index+1), blankTestCase()]);
     setSelectedTestCaseByKey('blank');
   }
 
-  const postTestCase = async (testCase: TestCaseObject) => {
+  const addTestCaseApi = async (testCase: TestCaseObject) => {
     setIsSaving(true);
     await axios.post(`${baseUrl}/api/testCases`, {
       key: testCase.key,
@@ -52,6 +66,7 @@ const MainContainer = () => {
     let index = testCaseList.findIndex( tc => {return tc.key === key});
     let listWithRemovedTestCase = [...testCaseList.slice(0, index), ...testCaseList.slice(index+1)];
 
+    // TODO - replace all data with the new list (as sort ids need updating) - requires new API call
     setTestCaseListState(listWithRemovedTestCase);
     setSelectedTestCase(testCaseList[index+1]);
   }
