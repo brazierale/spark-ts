@@ -13,9 +13,10 @@ interface TestCaseListProps {
   setSelectedTestCaseByKey: (key: string) => void;
   updateSelectedTestCase: (testCase: TestCaseObject) => void;
   setTestListCaseState: (testCaseList: TestCaseObject[]) => void;
+  replaceTestCaseListApi: (testCaseList: TestCaseObject[]) => void;
 }
 
-const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTestCaseByKey, selectedTestCase, setSelectedTestCaseByKey, updateSelectedTestCase, setTestListCaseState }: TestCaseListProps) => {
+const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTestCaseByKey, selectedTestCase, setSelectedTestCaseByKey, updateSelectedTestCase, setTestListCaseState, replaceTestCaseListApi }: TestCaseListProps) => {
   
   const [isDragEnabled, setDragEnabledState] = useRecoilState(dragEnabled);
 
@@ -36,6 +37,7 @@ const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTe
       }
       const listWithNewPosition = [...listWithRemovedTestCase.slice(0, moveToIndex), toMove, ...listWithRemovedTestCase.slice(moveToIndex)];
       
+      replaceTestCaseListApi(listWithNewPosition);
       setTestListCaseState(listWithNewPosition);
     }
   }
