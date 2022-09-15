@@ -66,13 +66,13 @@ const MainContainer = () => {
     let index = testCaseList.findIndex( tc => {return tc.key === key});
     let listWithRemovedTestCase = [...testCaseList.slice(0, index), ...testCaseList.slice(index+1)];
     
-    // TODO - replace all data with the new list (as sort ids need updating) - requires new API call
     replaceTestCaseListApi(listWithRemovedTestCase);
     setTestCaseListState(listWithRemovedTestCase);
     setSelectedTestCase(testCaseList[index+1]);
   }
 
   const replaceTestCaseListApi = async (newTestCaseList: TestCaseObject[]) => {
+    // remove the blank test case first
     let listWithBlankAlsoRemoved = [...newTestCaseList.slice(0, newTestCaseList.length-1)];
     setIsSaving(true);
     await axios.post(`${baseUrl}/api/newTestCaseList`, listWithBlankAlsoRemoved);
