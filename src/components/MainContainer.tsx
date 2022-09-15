@@ -65,7 +65,7 @@ const MainContainer = () => {
   const deleteTestCaseByKey = (key: string) => {
     let index = testCaseList.findIndex( tc => {return tc.key === key});
     let listWithRemovedTestCase = [...testCaseList.slice(0, index), ...testCaseList.slice(index+1)];
-    let listWithBlankAlsoRemoved = [...listWithRemovedTestCase.slice(0, listWithRemovedTestCase.length)];
+    let listWithBlankAlsoRemoved = [...listWithRemovedTestCase.slice(0, listWithRemovedTestCase.length-1)];
     
     // TODO - replace all data with the new list (as sort ids need updating) - requires new API call
     replaceTestCaseListApi(listWithBlankAlsoRemoved);
