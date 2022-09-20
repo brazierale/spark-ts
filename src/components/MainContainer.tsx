@@ -9,8 +9,7 @@ import { generateKey } from '../modules/KeyGen';
 import { saving, loading } from '../atoms/MainState';
 import Indicator from './Indicator';
 
-// eslint-disable-next-line no-undef
-const baseUrl = process.env.API_ROUTE;
+const baseUrl = "http://localhost:3001"
 
 const MainContainer = () => {
 
