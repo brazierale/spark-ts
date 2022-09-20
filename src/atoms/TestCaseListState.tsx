@@ -8,9 +8,9 @@ const getTestCaseList = selector({
   key: 'GetTestCaseList',
   get: async () => {
     let testCases: TestCaseObject[] = [];
-    const res = await axios.get(`${baseUrl}/api/testCases`)
+    try {
+      const res = await axios.get(`${baseUrl}/api/testCases`)
 
-    console.log(res)
     if (res.data.data.length > 0) {
       testCases = res.data.data.map((testCase: TestCaseObject) =>
         new TestCaseObject(
@@ -23,9 +23,12 @@ const getTestCaseList = selector({
       );
     }
     testCases.push(blankTestCase());
-    console.log(testCases);
-    return testCases;
+    return testCases;  
     }
+    catch {
+      return []
+    }
+  }
 });
 
 const testCaseListState = atom<TestCaseObject[]>({

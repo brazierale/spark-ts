@@ -44,22 +44,34 @@ const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTe
 
   const testCasesToRender = ( testCaseList: TestCaseObject[] ) => {
 
-    return (
-      testCaseList.map((testCase) => 
-        <Row key={testCase.key}
-          testCase={testCase}
-          updateTestCaseByKey={updateTestCaseByKey}
-          addTestCase={addTestCase}
-          deleteTestCaseByKey={deleteTestCaseByKey}
-          selectedTestCase={selectedTestCase}
-          setSelectedTestCaseByKey={setSelectedTestCaseByKey}
-          updateSelectedTestCase={updateSelectedTestCase}
-          moveTestCase={moveTestCase}
-          dragEnabled={isDragEnabled}
-          setDragEnabled={setDragEnabled}
-        />
-      )
-    );
+    if (testCaseList.length === 0)
+    {
+      return (
+        <div data-test-id="load-error" className="Load-error">
+          Failed to load. Is the API running?
+          <button className="Load-error-button" onClick={() => window.location.reload()}>Retry</button>
+        </div>
+      ) 
+    }
+    else {
+      return (
+        testCaseList.map((testCase) => 
+          <Row key={testCase.key}
+            testCase={testCase}
+            updateTestCaseByKey={updateTestCaseByKey}
+            addTestCase={addTestCase}
+            deleteTestCaseByKey={deleteTestCaseByKey}
+            selectedTestCase={selectedTestCase}
+            setSelectedTestCaseByKey={setSelectedTestCaseByKey}
+            updateSelectedTestCase={updateSelectedTestCase}
+            moveTestCase={moveTestCase}
+            dragEnabled={isDragEnabled}
+            setDragEnabled={setDragEnabled}
+          />
+        )
+      );
+    }
+      
   }
 
   return(

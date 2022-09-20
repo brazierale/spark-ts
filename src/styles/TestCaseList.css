@@ -37,6 +37,17 @@
     font-size: 1rem;
 }
 
+.Load-error {
+    margin-top: 24px;
+    font-size: 1.6rem;
+}
+
+.Load-error-button {
+    margin-top: 24px;
+    float: left;
+    background: #071F79;
+}
+
 .Test-case-input {
     resize: none;
     overflow: hidden;
