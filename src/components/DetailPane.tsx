@@ -7,9 +7,10 @@ import { TestCaseObject } from "../modules/TestCase";
 type DetailPaneProps = {
   selectedTestCase: TestCaseObject;
   updateSelectedTestCase: (testCase: TestCaseObject) => void;
+  updateTestCaseByKey: (testCase: TestCaseObject) => void;
 }
 
-const DetailPane = ({ selectedTestCase, updateSelectedTestCase }: DetailPaneProps ) => {
+const DetailPane = ({ selectedTestCase, updateSelectedTestCase, updateTestCaseByKey }: DetailPaneProps ) => {
     if (selectedTestCase) {
       return (
         <div className="Detail-pane">
@@ -35,7 +36,7 @@ const DetailPane = ({ selectedTestCase, updateSelectedTestCase }: DetailPaneProp
             <button 
               className="Save-details"
               disabled={selectedTestCase.disabled}
-              onClick={() => console.log('saving...')}
+              onClick={() => updateTestCaseByKey(selectedTestCase)}
             >Save</button>
           </div>
         </div>

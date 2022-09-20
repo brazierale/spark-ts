@@ -112,6 +112,7 @@ const MainContainer = () => {
       <DetailPane
         selectedTestCase={selectedTestCase}
         updateSelectedTestCase={updateSelectedTestCase}
+        updateTestCaseByKey={updateTestCaseByKey}
       />
       </div>
     </div>
