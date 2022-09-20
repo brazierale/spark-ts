@@ -10,11 +10,6 @@ export const saving = atom<boolean>({
   default: false
 })
 
-export const loadError = atom<boolean>({
-  key: 'loadError',
-  default: false
-})
-
 export const dragEnabled = atom<boolean>({
   key: 'dragEnabled',
   default: false
