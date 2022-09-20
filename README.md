@@ -1,7 +1,7 @@
 
 ### Initial setup
 1. Run `yarn install` in the base directory
-1. Ensure `baseUrl` matches the `spark-api` address in `TestCaseListState.tsx` and `MainContainer.tsx`
+1. Ensure `baseUrl` matches the `spark-api` address in `src/atoms/TestCaseListState.tsx` and `src/components/MainContainer.tsx`
 
 ### Run the application
 1. Ensure `spark-api` is already running
