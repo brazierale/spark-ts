@@ -13,8 +13,20 @@ const StepList = ({ selectedTestCase, updateSelectedTestCase}: StepListProps ) =
   const [stepEntry, setStepEntry] = useState('')
 
   const addStep = (step: string) => {
+    let steps = selectedTestCase.steps;
+
+    // we don't allow reordering, so just add 1 to the last id
+    let newId = () => {
+      if (steps.length !== 0) {
+        return steps[steps.length-1].id + 1
+      }
+      else {
+        return 1
+      }
+    }
+
     let newStep = new StepObject(
-      selectedTestCase.steps.length, // TOFIX - will break when deleting steps
+      newId(),
       step
     );
     let newStepList = [...selectedTestCase.steps, newStep]

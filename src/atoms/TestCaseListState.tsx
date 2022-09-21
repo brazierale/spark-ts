@@ -24,9 +24,10 @@ const getTestCaseList = selector({
     testCases.push(blankTestCase());
     return testCases;  
     }
-    catch {
+    catch (err) {
       // an empty list will be used to indicate an error in loading
-      return []
+      console.log(err);
+      return [];
     }
   }
 });
