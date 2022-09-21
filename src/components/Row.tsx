@@ -55,7 +55,7 @@ render(): ReactNode {
 
   if(!isDragging) {
     return connectDropTarget(connectDragSource(
-      <div className={classes}>
+      <div className={classes} data-testid="test-case">
         <div className="Test-case-container">
           <TestCaseInput
             testCase={testCase}
