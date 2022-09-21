@@ -8,8 +8,7 @@ import { blankTestCase, TestCaseObject } from '../modules/TestCase';
 import { generateKey } from '../modules/KeyGen';
 import { saving, loading } from '../atoms/MainState';
 import Indicator from './Indicator';
-
-const baseUrl = "http://localhost:3001"
+import { apiUrl } from '../config';
 
 const MainContainer = () => {
 
@@ -27,7 +26,7 @@ const MainContainer = () => {
 
   const updateTestCaseByKeyApi = async (testCase: TestCaseObject) => {
     setIsSaving(true);
-    await axios.put(`${baseUrl}/api/testCases/${testCase.key}`, {
+    await axios.put(`${apiUrl}/api/testCases/${testCase.key}`, {
       update: {
         summary: testCase.summary,
         description: testCase.description,
@@ -52,7 +51,7 @@ const MainContainer = () => {
 
   const addTestCaseApi = async (testCase: TestCaseObject) => {
     setIsSaving(true);
-    await axios.post(`${baseUrl}/api/testCases`, {
+    await axios.post(`${apiUrl}/api/testCases`, {
       key: testCase.key,
       summary: testCase.summary,
       description: testCase.description,
@@ -75,7 +74,7 @@ const MainContainer = () => {
     // remove the blank test case first
     let listWithBlankAlsoRemoved = [...newTestCaseList.slice(0, newTestCaseList.length-1)];
     setIsSaving(true);
-    await axios.post(`${baseUrl}/api/newTestCaseList`, listWithBlankAlsoRemoved);
+    await axios.post(`${apiUrl}/api/newTestCaseList`, listWithBlankAlsoRemoved);
     setIsSaving(false);
   }
 
