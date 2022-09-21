@@ -71,7 +71,7 @@ const MainContainer = () => {
   }
 
   const replaceTestCaseListApi = async (newTestCaseList: TestCaseObject[]) => {
-    // remove the blank test case first
+    // we don't want to store the blank test case in the database
     let listWithBlankAlsoRemoved = [...newTestCaseList.slice(0, newTestCaseList.length-1)];
     setIsSaving(true);
     await axios.post(`${apiUrl}/api/newTestCaseList`, listWithBlankAlsoRemoved);

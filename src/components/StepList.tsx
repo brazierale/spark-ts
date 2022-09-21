@@ -9,7 +9,7 @@ type StepListProps = {
 }
 
 // list of steps to run a test case
-const StepList = ({selectedTestCase, updateSelectedTestCase}: StepListProps) => {
+const StepList = ({ selectedTestCase, updateSelectedTestCase}: StepListProps ) => {
   const [stepEntry, setStepEntry] = useState('')
 
   const addStep = (step: string) => {

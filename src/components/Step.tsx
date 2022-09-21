@@ -9,7 +9,7 @@ type StepProps = {
 }
 
 // single step
-const Step = ({ disabled, step, deleteStep, updateStep }: StepProps) => {
+const Step = ({ disabled, step, deleteStep, updateStep }: StepProps ) => {
   
   const handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     updateStep(step.id, event.target.value);

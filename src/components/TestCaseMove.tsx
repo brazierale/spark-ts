@@ -8,7 +8,7 @@ type MoveTestCaseProps = {
 }
 
 // icon to reorder test case, currently only visual
-const TestCaseMove = ({ testCase, setDragEnabled }: MoveTestCaseProps) => {
+const TestCaseMove = ({ testCase, setDragEnabled }: MoveTestCaseProps ) => {
   if (testCase.key !== 'blank' && testCase.disabled !== true) {
     return (
       <FontAwesomeIcon

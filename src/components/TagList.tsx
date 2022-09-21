@@ -10,7 +10,7 @@ type TagListProps = {
 };
 
 // list of tags
-const TagList = ({selectedTestCase, updateSelectedTestCase}: TagListProps) => {
+const TagList = ({ selectedTestCase, updateSelectedTestCase }: TagListProps ) => {
   const [newTag, setNewTag] = useState({name: ''});
 
   const addTag = (tag: string) => {

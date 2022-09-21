@@ -42,7 +42,7 @@ const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTe
     }
   }
 
-  const testCasesToRender = ( testCaseList: TestCaseObject[] ) => {
+  const testCasesToRender = (testCaseList: TestCaseObject[]) => {
 
     if (testCaseList.length === 0)
     {

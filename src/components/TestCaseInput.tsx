@@ -34,7 +34,7 @@ const TestCaseInput = ({ testCase, updateTestCaseByKey, addTestCase, deleteTestC
     }
   }
 
-  const sendUpdate = ( summary: string ) => {
+  const sendUpdate = (summary: string) => {
     // create new test case if this is the entryRow
     if(selectedTestCase.key === 'blank' && summary !== '') {
       addTestCase(selectedTestCase);

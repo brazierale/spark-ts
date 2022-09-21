@@ -4,7 +4,7 @@ type IndicatorProps = {
   saving: boolean
 }
 
-const Indicator = ({loading, saving}: IndicatorProps) => {
+const Indicator = ({ loading, saving }: IndicatorProps ) => {
   if (loading) {
     return <div data-testid='loading' className="Loading"/>;
   }

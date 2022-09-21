@@ -25,63 +25,63 @@ interface RowProps {
 }
 
 class Row extends Component<RowProps> {
-render(): ReactNode {
+  render(): ReactNode {
+    const {
+      testCase,
+      updateTestCaseByKey,
+      addTestCase,
+      deleteTestCaseByKey,
+      selectedTestCase,
+      setSelectedTestCaseByKey,
+      updateSelectedTestCase,
+      connectDragSource,
+      connectDropTarget,
+      setDragEnabled,
+      isDragging,
+      isOver
+    } = this.props
 
-  const {
-    testCase,
-    updateTestCaseByKey,
-    addTestCase,
-    deleteTestCaseByKey,
-    selectedTestCase,
-    setSelectedTestCaseByKey,
-    updateSelectedTestCase,
-    connectDragSource,
-    connectDropTarget,
-    setDragEnabled,
-    isDragging,
-    isOver
-  } = this.props
+    const isSelected = () => {
+      return testCase.key === this.props.selectedTestCase.key;
+    }
 
-  const isSelected = () => {
-    return testCase.key === this.props.selectedTestCase.key;
-  }
+    let classes = classNames({
+      'Row': true,
+      'Selected-row': isSelected(),
+      'Test-case-disabled': testCase.disabled,
+      'Hover-over': isOver
+    });
 
-  let classes = classNames({
-    'Row': true,
-    'Selected-row': isSelected(),
-    'Test-case-disabled': testCase.disabled,
-    'Hover-over': isOver
-  });
-
-  if(!isDragging) {
-    return connectDropTarget(connectDragSource(
-      <div className={classes} data-testid="test-case">
-        <div className="Test-case-container">
-          <TestCaseInput
+    if(!isDragging) {
+      return connectDropTarget(connectDragSource(
+        <div className={classes} data-testid="test-case">
+          <div className="Test-case-container">
+            <TestCaseInput
+              testCase={testCase}
+              updateTestCaseByKey={updateTestCaseByKey}
+              addTestCase={addTestCase}
+              deleteTestCase={deleteTestCaseByKey}
+              selectedTestCase={selectedTestCase}
+              isSelected={isSelected()}
+              setSelectedTestCaseByKey={setSelectedTestCaseByKey}
+              updateSelectedTestCase={updateSelectedTestCase}
+            />
+          </div>
+          <div >
+            <TestCaseMove
+              testCase={testCase}
+              setDragEnabled={setDragEnabled}
+            />
+          </div>
+          <TestCaseDelete
             testCase={testCase}
-            updateTestCaseByKey={updateTestCaseByKey}
-            addTestCase={addTestCase}
-            deleteTestCase={deleteTestCaseByKey}
-            selectedTestCase={selectedTestCase}
-            isSelected={isSelected()}
-            setSelectedTestCaseByKey={setSelectedTestCaseByKey}
-            updateSelectedTestCase={updateSelectedTestCase}
+            deleteTestCaseByKey={deleteTestCaseByKey}
           />
         </div>
-        <div >
-          <TestCaseMove
-            testCase={testCase}
-            setDragEnabled={setDragEnabled}
-          />
-        </div>
-        <TestCaseDelete
-          testCase={testCase}
-          deleteTestCaseByKey={deleteTestCaseByKey}
-        />
-      </div>
-    ));
-  }
-  else return null;
+      ));
+    }
+    // don't display the test case whilst we're dragging
+    else return null;
   }
 }
 

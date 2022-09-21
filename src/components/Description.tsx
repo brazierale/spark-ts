@@ -7,19 +7,19 @@ type DescriptionProps = {
 }
 
 // description field
-const Description = ({ selectedTestCase, updateSelectedTestCase }: DescriptionProps) => {
+const Description = ({ selectedTestCase, updateSelectedTestCase }: DescriptionProps ) => {
   
   const handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     updateSelectedTestCase({
       ...selectedTestCase,
-      description:event.target.value
+      description: event.target.value
     })
   }
   
   return(
     <div 
-    data-testid='description'
-    className="Description-container"
+      data-testid='description'
+      className="Description-container"
     >
       <span className="Label">Description</span>
       <textarea

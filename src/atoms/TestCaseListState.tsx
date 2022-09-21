@@ -25,6 +25,7 @@ const getTestCaseList = selector({
     return testCases;  
     }
     catch {
+      // an empty list will be used to indicate an error in loading
       return []
     }
   }
