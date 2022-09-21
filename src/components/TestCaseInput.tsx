@@ -12,7 +12,7 @@ interface TestCaseInputProps {
   updateSelectedTestCase: (testCase: TestCaseObject) => void;
 };
 
-const TestCaseInput = ({ testCase, updateTestCaseByKey, addTestCase, deleteTestCase, selectedTestCase, isSelected, setSelectedTestCaseByKey, updateSelectedTestCase }: TestCaseInputProps) => {
+const TestCaseInput = ({ testCase, updateTestCaseByKey, addTestCase, deleteTestCase, selectedTestCase, isSelected, setSelectedTestCaseByKey, updateSelectedTestCase }: TestCaseInputProps ) => {
 
   const handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     updateSelectedTestCase({

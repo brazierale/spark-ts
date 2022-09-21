@@ -16,7 +16,7 @@ interface TestCaseListProps {
   replaceTestCaseListApi: (testCaseList: TestCaseObject[]) => void;
 }
 
-const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTestCaseByKey, selectedTestCase, setSelectedTestCaseByKey, updateSelectedTestCase, setTestListCaseState, replaceTestCaseListApi }: TestCaseListProps) => {
+const TestCaseList = ({ testCaseList, updateTestCaseByKey, addTestCase, deleteTestCaseByKey, selectedTestCase, setSelectedTestCaseByKey, updateSelectedTestCase, setTestListCaseState, replaceTestCaseListApi }: TestCaseListProps ) => {
   
   const [isDragEnabled, setDragEnabledState] = useRecoilState(dragEnabled);
 
