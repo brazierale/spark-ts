@@ -14,22 +14,21 @@ const TagList = ({ selectedTestCase, updateSelectedTestCase }: TagListProps ) =>
   const [newTag, setNewTag] = useState({name: ''});
 
   const addTag = (tag: string) => {
-    // only add if it is not a duplicate
-    const isDuplicate = ( element: string ) => {
-      return element === tag;
-    };
-    let newTagList = [...selectedTestCase.tags];
-        
-    // only add if it is not a duplicate
-    if (!selectedTestCase.tags.some(isDuplicate)) {
-      newTagList = [...selectedTestCase.tags, tag];
-
+    if (tag !== '') {
+      // only add if it is not a duplicate
+      const isDuplicate = ( element: string ) => {
+        return element === tag;
+      };
+      let newTagList = [...selectedTestCase.tags];
+          
+      if (!selectedTestCase.tags.some(isDuplicate)) {
+        newTagList = [...selectedTestCase.tags, tag];
+        updateSelectedTestCase({
+          ...selectedTestCase,
+          tags: newTagList
+        });
+      }
     }
-
-    updateSelectedTestCase({
-      ...selectedTestCase,
-      tags: newTagList
-    });
   }
 
   const deleteTag = (tag: string) => {
