@@ -112,6 +112,7 @@ const MainContainer = () => {
         selectedTestCase={selectedTestCase}
         updateSelectedTestCase={updateSelectedTestCase}
         updateTestCaseByKey={updateTestCaseByKey}
+        addTestCase={addTestCase}
       />
       </div>
     </div>
