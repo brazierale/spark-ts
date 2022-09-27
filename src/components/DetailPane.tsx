@@ -3,6 +3,7 @@ import Description from "./Description";
 import StepList from "./StepList";
 import TagList from "./TagList";
 import { TestCaseObject } from "../modules/TestCase";
+import Summary from './Summary';
 
 type DetailPaneProps = {
   selectedTestCase: TestCaseObject;
@@ -30,7 +31,12 @@ const DetailPane = ({
       <div className="Detail-pane">
         <div className="Debug-key">{selectedTestCase.key}</div>
         <div className="Detail-pane-header">
-          <h1>{selectedTestCase.summary}</h1>
+          <Summary
+            description={selectedTestCase.summary}
+            selectedTestCase={selectedTestCase}
+            updateSelectedTestCase={updateSelectedTestCase}
+          />
+          <h1 className='Summary'>{selectedTestCase.summary}</h1>
         </div>
         <div className='Detail-pane-body'>
           <Description

@@ -24,6 +24,17 @@
   z-index: 2;
 }
 
+.Summary {
+    font-size: 20px;
+    padding: 0px;
+    background: #F6F7FE;
+    outline: none;
+    overflow: hidden;
+    width: 100%;
+    resize: none;
+    border: none;
+}
+
 .Detail-pane-header {
   margin: 20px 20px 0px 20px;
 }
