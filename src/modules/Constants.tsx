@@ -1,3 +1,3 @@
 export const ItemTypes = {
-  TEST_CASE: 'testCase'
+  TEST_CASE: 'testCase',
 };

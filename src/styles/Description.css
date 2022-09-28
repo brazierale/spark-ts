@@ -1,29 +1,29 @@
 .Description-container {
-    margin: 30px 20px;
-    display: flex;
-    flex-direction: column;
+  margin: 30px 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .Description-input {
-    flex: 1 1 auto;
-    font-size: 0.9rem;
-    margin: 0px 10px;
-    background: white;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
-    padding: 5px;
-    transition: 0.2s linear;
+  flex: 1 1 auto;
+  font-size: 0.9rem;
+  margin: 0px 10px;
+  background: white;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  padding: 5px;
+  transition: 0.2s linear;
 }
 
 .Description-input::placeholder {
-    color: #CCCCCC;
-    font-style: italic;
+  color: #cccccc;
+  font-style: italic;
 }
 
 .Description-input:focus {
-    outline: none;
+  outline: none;
 }
 
 .Description-input:disabled {
-    background-color: #EEEEEE;
+  background-color: #eeeeee;
 }

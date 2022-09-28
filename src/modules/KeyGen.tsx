@@ -1,4 +1,4 @@
-export function generateKey(){
+export function generateKey() {
   var length = 20,
     allc = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
     keygen = '';

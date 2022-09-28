@@ -10,41 +10,42 @@ type TagListProps = {
 };
 
 // list of tags
-const TagList = ({ selectedTestCase, updateSelectedTestCase }: TagListProps ) => {
-  const [newTag, setNewTag] = useState({name: ''});
+const TagList = ({
+  selectedTestCase,
+  updateSelectedTestCase,
+}: TagListProps) => {
+  const [newTag, setNewTag] = useState({ name: '' });
 
   const addTag = (tag: string) => {
     if (tag !== '') {
       // only add if it is not a duplicate
-      const isDuplicate = ( element: string ) => {
+      const isDuplicate = (element: string) => {
         return element === tag;
       };
       let newTagList = [...selectedTestCase.tags];
-          
+
       if (!selectedTestCase.tags.some(isDuplicate)) {
         newTagList = [...selectedTestCase.tags, tag];
         updateSelectedTestCase({
           ...selectedTestCase,
-          tags: newTagList
+          tags: newTagList,
         });
       }
     }
-  }
+  };
 
   const deleteTag = (tag: string) => {
-    let newTagList = selectedTestCase.tags.filter(
-      t => t !== tag
-    );
+    let newTagList = selectedTestCase.tags.filter((t) => t !== tag);
 
     updateSelectedTestCase({
       ...selectedTestCase,
-      tags: newTagList
-    })
-  }
+      tags: newTagList,
+    });
+  };
 
   const handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNewTag({ name: event.target.value});
-  }
+    setNewTag({ name: event.target.value });
+  };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === 'Tab') {
@@ -52,38 +53,38 @@ const TagList = ({ selectedTestCase, updateSelectedTestCase }: TagListProps ) =>
       addTag(newTag.name);
       setNewTag({ name: '' });
     }
-  }
+  };
 
   const handleBlur = () => {
     setNewTag({ name: '' });
-  }
+  };
 
   let key = 0;
-  const tagsToRender = selectedTestCase.tags.map( tag => 
+  const tagsToRender = selectedTestCase.tags.map((tag) => (
     <Tag
-      key={key++} 
+      key={key++}
       tagName={tag}
       deleteTag={deleteTag}
       disabled={selectedTestCase.disabled}
     />
-  );
+  ));
 
   let listClasses = classNames({
     'Tag-list': true,
-    'Disabled': selectedTestCase.disabled
+    Disabled: selectedTestCase.disabled,
   });
 
-  return(
-    <div data-testid="tag-list" className="Tag-list-container">
-      <span className="Label">Tags</span>
+  return (
+    <div data-testid='tag-list' className='Tag-list-container'>
+      <span className='Label'>Tags</span>
       <span className={listClasses}>
         {tagsToRender}
         <textarea
-          data-testid="tag-new"
-          className="Tag-input"
+          data-testid='tag-new'
+          className='Tag-input'
           rows={1}
-          wrap="off"
-          placeholder="Enter new tag..."
+          wrap='off'
+          placeholder='Enter new tag...'
           value={newTag.name}
           onChange={handleUserInput}
           onKeyDown={handleKeyDown}
@@ -93,6 +94,6 @@ const TagList = ({ selectedTestCase, updateSelectedTestCase }: TagListProps ) =>
       </span>
     </div>
   );
-}
+};
 
 export default TagList;

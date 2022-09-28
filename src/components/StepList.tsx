@@ -6,11 +6,14 @@ import '../styles/Step.css';
 type StepListProps = {
   selectedTestCase: TestCaseObject;
   updateSelectedTestCase: (testCase: TestCaseObject) => void;
-}
+};
 
 // list of steps to run a test case
-const StepList = ({ selectedTestCase, updateSelectedTestCase}: StepListProps ) => {
-  const [stepEntry, setStepEntry] = useState('')
+const StepList = ({
+  selectedTestCase,
+  updateSelectedTestCase,
+}: StepListProps) => {
+  const [stepEntry, setStepEntry] = useState('');
 
   const addStep = (step: string) => {
     let steps = selectedTestCase.steps;
@@ -18,52 +21,56 @@ const StepList = ({ selectedTestCase, updateSelectedTestCase}: StepListProps ) =
     // we don't allow reordering, so just add 1 to the last id
     let newId = () => {
       if (steps.length !== 0) {
-        return steps[steps.length-1].id + 1
+        return steps[steps.length - 1].id + 1;
+      } else {
+        return 1;
       }
-      else {
-        return 1
-      }
-    }
+    };
 
-    let newStep = new StepObject(
-      newId(),
-      step
-    );
-    let newStepList = [...selectedTestCase.steps, newStep]
+    let newStep = new StepObject(newId(), step);
+    let newStepList = [...selectedTestCase.steps, newStep];
 
     updateSelectedTestCase({
       ...selectedTestCase,
-      steps: newStepList
+      steps: newStepList,
     });
-  }
+  };
 
-  const deleteStep = (id: number) => { 
-    let index = selectedTestCase.steps.findIndex( s => {return s.id === id});
-    let newStepList = [...selectedTestCase.steps.slice(0, index), ...selectedTestCase.steps.slice(index+1)];
+  const deleteStep = (id: number) => {
+    let index = selectedTestCase.steps.findIndex((s) => {
+      return s.id === id;
+    });
+    let newStepList = [
+      ...selectedTestCase.steps.slice(0, index),
+      ...selectedTestCase.steps.slice(index + 1),
+    ];
 
     updateSelectedTestCase({
       ...selectedTestCase,
-      steps: newStepList
-    })
-  }
+      steps: newStepList,
+    });
+  };
 
   const updateStep = (id: number, newName: string) => {
-    let newStep = new StepObject(
-      id,
-      newName
-    )    
-    let index = selectedTestCase.steps.findIndex( s => {return s.id === id});
-    let newStepList = [...selectedTestCase.steps.slice(0, index), newStep, ...selectedTestCase.steps.slice(index+1)];
+    let newStep = new StepObject(id, newName);
+    let index = selectedTestCase.steps.findIndex((s) => {
+      return s.id === id;
+    });
+    let newStepList = [
+      ...selectedTestCase.steps.slice(0, index),
+      newStep,
+      ...selectedTestCase.steps.slice(index + 1),
+    ];
 
     updateSelectedTestCase({
       ...selectedTestCase,
-      steps: newStepList
-    })
-  }
+      steps: newStepList,
+    });
+  };
 
   const handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setStepEntry(event.target.value);
-  }
+  };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === 'Tab') {
@@ -73,16 +80,16 @@ const StepList = ({ selectedTestCase, updateSelectedTestCase}: StepListProps ) =
         setStepEntry('');
       }
     }
-  }
+  };
 
   const handleBlur = () => {
     if (stepEntry !== '') {
       addStep(stepEntry);
     }
     setStepEntry('');
-  }
+  };
 
-  const stepsToRender = selectedTestCase.steps.map( step => 
+  const stepsToRender = selectedTestCase.steps.map((step) => (
     <Step
       key={step.id}
       step={step}
@@ -90,17 +97,17 @@ const StepList = ({ selectedTestCase, updateSelectedTestCase}: StepListProps ) =
       updateStep={updateStep}
       disabled={selectedTestCase.disabled}
     />
-  );
+  ));
 
-  return(
-    <div data-testid="step-list" className="Step-list-container">
-      <span className="Label">Steps</span>
-      <span className="Step-list">
+  return (
+    <div data-testid='step-list' className='Step-list-container'>
+      <span className='Label'>Steps</span>
+      <span className='Step-list'>
         {stepsToRender}
         <input
-          data-testid="step-new"
-          className="Step-input"
-          placeholder="Enter new step..."
+          data-testid='step-new'
+          className='Step-input'
+          placeholder='Enter new step...'
           value={stepEntry}
           onChange={handleUserInput}
           onKeyDown={handleKeyDown}
@@ -110,6 +117,6 @@ const StepList = ({ selectedTestCase, updateSelectedTestCase}: StepListProps ) =
       </span>
     </div>
   );
-}
+};
 
 export default StepList;

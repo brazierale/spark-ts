@@ -22,8 +22,7 @@ export class TestCaseObject {
     description: string,
     steps: StepObject[],
     tags: string[]
-  )
-  {
+  ) {
     this.key = key;
     this.summary = summary;
     this.description = description;
@@ -34,11 +33,5 @@ export class TestCaseObject {
 }
 
 export function blankTestCase() {
-  return new TestCaseObject(
-    'blank',
-    '',
-    '',
-    [],
-    [],
-  );
+  return new TestCaseObject('blank', '', '', [], []);
 }

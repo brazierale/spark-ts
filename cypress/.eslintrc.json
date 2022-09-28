@@ -1,41 +1,8 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "plugin:cypress/recommended"
-  ],
+  "extends": ["plugin:cypress/recommended"],
   "plugins": ["cypress"],
-  "parser": "@babel/eslint-parser",
-  "parserOptions": {
-    "requireConfigFile": false,
-    "babelOptions": {
-      "presets": [
-        [
-          "@babel/preset-react"
-        ]
-      ]
-    }
-  },
-  "env": {
-    "es6": true,
-    "browser": true,
-    "cypress/globals": true
-  },
-  "rules": {
-    "indent": [
-      "error",
-      2
-    ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ]
+  "globals": {
+    "cy": true,
+    "Cypress": true
   }
 }

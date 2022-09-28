@@ -9,19 +9,22 @@ type DetailPaneProps = {
   updateSelectedTestCase: (testCase: TestCaseObject) => void;
   updateTestCaseByKey: (testCase: TestCaseObject) => void;
   addTestCase: (testCase: TestCaseObject) => void;
-}
+};
 
-const DetailPane = ({ selectedTestCase, updateSelectedTestCase, updateTestCaseByKey, addTestCase }: DetailPaneProps ) => {
-  
+const DetailPane = ({
+  selectedTestCase,
+  updateSelectedTestCase,
+  updateTestCaseByKey,
+  addTestCase,
+}: DetailPaneProps) => {
   const save = (testCase: TestCaseObject) => {
     if (testCase.key !== 'blank') {
-      updateTestCaseByKey(testCase)
+      updateTestCaseByKey(testCase);
+    } else if (testCase.key === 'blank' && testCase.summary !== '') {
+      addTestCase(testCase);
     }
-    else if (testCase.key === 'blank' && testCase.summary !== '') {
-      addTestCase(testCase)
-    }
-  }
-  
+  };
+
   if (selectedTestCase) {
     return (
       <div className="Detail-pane">
@@ -29,33 +32,34 @@ const DetailPane = ({ selectedTestCase, updateSelectedTestCase, updateTestCaseBy
         <div className="Detail-pane-header">
           <h1>{selectedTestCase.summary}</h1>
         </div>
-        <div className="Detail-pane-body">
-        <Description
-          selectedTestCase={selectedTestCase}
-          updateSelectedTestCase={updateSelectedTestCase}
-        />
-        <StepList
-          selectedTestCase={selectedTestCase}
-          updateSelectedTestCase={updateSelectedTestCase}
-        />
-        <TagList
-          selectedTestCase={selectedTestCase}
-          updateSelectedTestCase={updateSelectedTestCase}
-        />
+        <div className='Detail-pane-body'>
+          <Description
+            selectedTestCase={selectedTestCase}
+            updateSelectedTestCase={updateSelectedTestCase}
+          />
+          <StepList
+            selectedTestCase={selectedTestCase}
+            updateSelectedTestCase={updateSelectedTestCase}
+          />
+          <TagList
+            selectedTestCase={selectedTestCase}
+            updateSelectedTestCase={updateSelectedTestCase}
+          />
         </div>
-        <div className="Detail-pane-footer">
-          <button 
-            className="Save-details"
+        <div className='Detail-pane-footer'>
+          <button
+            className='Save-details'
             disabled={selectedTestCase.disabled}
             onClick={() => save(selectedTestCase)}
-          >Save</button>
+          >
+            Save
+          </button>
         </div>
       </div>
     );
-  }
-  else {
+  } else {
     return null;
   }
-}
+};
 
 export default DetailPane;

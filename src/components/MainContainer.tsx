@@ -11,18 +11,26 @@ import Indicator from './Indicator';
 import { apiUrl } from '../config';
 
 const MainContainer = () => {
-
-  const [testCaseList, setTestCaseListState] = useRecoilState(testCaseListState);
-  const [selectedTestCase, setSelectedTestCase] = useRecoilState(selectedTestCaseState);
+  const [testCaseList, setTestCaseListState] =
+    useRecoilState(testCaseListState);
+  const [selectedTestCase, setSelectedTestCase] = useRecoilState(
+    selectedTestCaseState
+  );
   const [isSaving, setIsSaving] = useRecoilState(saving);
   const [isLoading] = useRecoilState(loading);
 
   const updateTestCaseByKey = (testCase: TestCaseObject) => {
-    let index = testCaseList.findIndex( tc => {return tc.key === testCase.key});
+    let index = testCaseList.findIndex((tc) => {
+      return tc.key === testCase.key;
+    });
 
     updateTestCaseByKeyApi(testCase);
-    setTestCaseListState([...testCaseList.slice(0, index), testCase, ...testCaseList.slice(index+1)]);
-  }
+    setTestCaseListState([
+      ...testCaseList.slice(0, index),
+      testCase,
+      ...testCaseList.slice(index + 1),
+    ]);
+  };
 
   const updateTestCaseByKeyApi = async (testCase: TestCaseObject) => {
     setIsSaving(true);
@@ -31,23 +39,30 @@ const MainContainer = () => {
         summary: testCase.summary,
         description: testCase.description,
         steps: testCase.steps,
-        tags: testCase.tags
-      }
-    })
+        tags: testCase.tags,
+      },
+    });
     setIsSaving(false);
-  }
+  };
 
   const addTestCase = (testCase: TestCaseObject) => {
     let newTestCase = {
       ...testCase,
-      key: generateKey()
-    }
-    let index = testCaseList.findIndex( tc => {return tc.key === testCase.key});
+      key: generateKey(),
+    };
+    let index = testCaseList.findIndex((tc) => {
+      return tc.key === testCase.key;
+    });
 
     addTestCaseApi(newTestCase);
-    setTestCaseListState([...testCaseList.slice(0, index), newTestCase, ...testCaseList.slice(index+1), blankTestCase()]);
+    setTestCaseListState([
+      ...testCaseList.slice(0, index),
+      newTestCase,
+      ...testCaseList.slice(index + 1),
+      blankTestCase(),
+    ]);
     setSelectedTestCaseByKey('blank');
-  }
+  };
 
   const addTestCaseApi = async (testCase: TestCaseObject) => {
     setIsSaving(true);
@@ -56,45 +71,51 @@ const MainContainer = () => {
       summary: testCase.summary,
       description: testCase.description,
       steps: testCase.steps,
-      tags: testCase.tags
-    })
+      tags: testCase.tags,
+    });
     setIsSaving(false);
-  }
+  };
 
   const deleteTestCaseByKey = (key: string) => {
-    let index = testCaseList.findIndex( tc => {return tc.key === key});
-    let listWithRemovedTestCase = [...testCaseList.slice(0, index), ...testCaseList.slice(index+1)];
-    
+    let index = testCaseList.findIndex((tc) => {
+      return tc.key === key;
+    });
+    let listWithRemovedTestCase = [
+      ...testCaseList.slice(0, index),
+      ...testCaseList.slice(index + 1),
+    ];
+
     replaceTestCaseListApi(listWithRemovedTestCase);
     setTestCaseListState(listWithRemovedTestCase);
-    setSelectedTestCase(testCaseList[index+1]);
-  }
+    setSelectedTestCase(testCaseList[index + 1]);
+  };
 
   const replaceTestCaseListApi = async (newTestCaseList: TestCaseObject[]) => {
     // we don't want to store the blank test case in the database
-    let listWithBlankAlsoRemoved = [...newTestCaseList.slice(0, newTestCaseList.length-1)];
+    let listWithBlankAlsoRemoved = [
+      ...newTestCaseList.slice(0, newTestCaseList.length - 1),
+    ];
     setIsSaving(true);
     await axios.post(`${apiUrl}/api/newTestCaseList`, listWithBlankAlsoRemoved);
     setIsSaving(false);
-  }
+  };
 
   const setSelectedTestCaseByKey = (key: string) => {
-    let index = testCaseList.findIndex( tc => {return tc.key === key});
+    let index = testCaseList.findIndex((tc) => {
+      return tc.key === key;
+    });
 
     setSelectedTestCase(testCaseList[index]);
-  }
+  };
 
   const updateSelectedTestCase = (testCase: TestCaseObject) => {
     setSelectedTestCase(testCase);
-  }
-  
-  return(
-    <div className="Main-container">
-      <Indicator
-          loading={isLoading}
-          saving={isSaving}
-        />
-      <div className="Test-case-list-container">
+  };
+
+  return (
+    <div className='Main-container'>
+      <Indicator loading={isLoading} saving={isSaving} />
+      <div className='Test-case-list-container'>
         <TestCaseList
           testCaseList={testCaseList}
           updateTestCaseByKey={updateTestCaseByKey}
@@ -107,16 +128,16 @@ const MainContainer = () => {
           replaceTestCaseListApi={replaceTestCaseListApi}
         />
       </div>
-      <div className="Detail-pane-container">
-      <DetailPane
-        selectedTestCase={selectedTestCase}
-        updateSelectedTestCase={updateSelectedTestCase}
-        updateTestCaseByKey={updateTestCaseByKey}
-        addTestCase={addTestCase}
-      />
+      <div className='Detail-pane-container'>
+        <DetailPane
+          selectedTestCase={selectedTestCase}
+          updateSelectedTestCase={updateSelectedTestCase}
+          updateTestCaseByKey={updateTestCaseByKey}
+          addTestCase={addTestCase}
+        />
       </div>
     </div>
   );
-}
+};
 
 export default MainContainer;
