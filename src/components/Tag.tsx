@@ -7,15 +7,11 @@ type TagProps = {
 };
 
 // single tag which will in future act as a link to filtering
-const Tag = ({ tagName, disabled, deleteTag }: TagProps ) => {
-  
+const Tag = ({ tagName, disabled, deleteTag }: TagProps) => {
   return (
-    <span data-testid="tag" className="Tag">
+    <span data-testid='tag' className='Tag'>
       {tagName}
-      <DeleteTag
-        tagName={tagName}
-        disabled={disabled}
-        deleteTag={deleteTag} />
+      <DeleteTag tagName={tagName} disabled={disabled} deleteTag={deleteTag} />
     </span>
   );
 };

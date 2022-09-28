@@ -10,33 +10,41 @@ interface TestCaseInputProps {
   isSelected: Boolean;
   setSelectedTestCaseByKey: (key: string) => void;
   updateSelectedTestCase: (testCase: TestCaseObject) => void;
-};
+}
 
-const TestCaseInput = ({ testCase, updateTestCaseByKey, addTestCase, deleteTestCase, selectedTestCase, isSelected, setSelectedTestCaseByKey, updateSelectedTestCase }: TestCaseInputProps ) => {
-
+const TestCaseInput = ({
+  testCase,
+  updateTestCaseByKey,
+  addTestCase,
+  deleteTestCase,
+  selectedTestCase,
+  isSelected,
+  setSelectedTestCaseByKey,
+  updateSelectedTestCase,
+}: TestCaseInputProps) => {
   const handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     updateSelectedTestCase({
       ...selectedTestCase,
-      summary: event.target.value
-    })
-  }
+      summary: event.target.value,
+    });
+  };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === 'Tab') {
       event.preventDefault();
       sendUpdate(selectedTestCase.summary);
     }
-  }
-    
+  };
+
   const handleFocus = () => {
     if (selectedTestCase.key !== testCase.key) {
       setSelectedTestCaseByKey(testCase.key);
     }
-  }
+  };
 
   const sendUpdate = (summary: string) => {
     // create new test case if this is the entryRow
-    if(selectedTestCase.key === 'blank' && summary !== '') {
+    if (selectedTestCase.key === 'blank' && summary !== '') {
       addTestCase(selectedTestCase);
     }
     // delete the test case if it is empty
@@ -47,15 +55,15 @@ const TestCaseInput = ({ testCase, updateTestCaseByKey, addTestCase, deleteTestC
     else if (selectedTestCase.key !== 'blank') {
       updateTestCaseByKey({
         ...selectedTestCase,
-        summary: summary
-      })
+        summary: summary,
+      });
     }
-  }
+  };
 
   let classes = classNames({
     'Test-case': true,
     'Test-case-input': true,
-    'Selected-input': isSelected
+    'Selected-input': isSelected,
   });
 
   // this ensures the field remains editable
@@ -66,11 +74,11 @@ const TestCaseInput = ({ testCase, updateTestCaseByKey, addTestCase, deleteTestC
 
   return (
     <textarea
-      data-testid="test-case-input"
+      data-testid='test-case-input'
       rows={1}
-      wrap="off"
+      wrap='off'
       maxLength={255}
-      placeholder="Enter your test case here..."
+      placeholder='Enter your test case here...'
       className={classes}
       value={summary}
       onChange={handleUserInput}
@@ -79,6 +87,6 @@ const TestCaseInput = ({ testCase, updateTestCaseByKey, addTestCase, deleteTestC
       disabled={testCase.disabled}
     />
   );
-}
+};
 
 export default TestCaseInput;

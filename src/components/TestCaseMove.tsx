@@ -3,30 +3,29 @@ import { faArrowsAlt } from '@fortawesome/free-solid-svg-icons';
 import { TestCaseObject } from '../modules/TestCase';
 
 type MoveTestCaseProps = {
-  testCase: TestCaseObject
+  testCase: TestCaseObject;
   setDragEnabled: (isDragEnabled: boolean) => void;
-}
+};
 
 // icon to reorder test case, currently only visual
-const TestCaseMove = ({ testCase, setDragEnabled }: MoveTestCaseProps ) => {
+const TestCaseMove = ({ testCase, setDragEnabled }: MoveTestCaseProps) => {
   if (testCase.key !== 'blank' && testCase.disabled !== true) {
     return (
       <FontAwesomeIcon
         data-testid='move-row'
-        className="Move-row"
+        className='Move-row'
         icon={faArrowsAlt}
-        size="sm"
+        size='sm'
         onMouseDown={() => enableMove(setDragEnabled)}
         onMouseLeave={() => disableMove(setDragEnabled)}
       />
     );
-  }
-  else {
+  } else {
     return null;
   }
 };
 
-const enableMove = (setDragEnabled: (isDragEnabled: boolean) => void)  => {
+const enableMove = (setDragEnabled: (isDragEnabled: boolean) => void) => {
   setDragEnabled(true);
 };
 

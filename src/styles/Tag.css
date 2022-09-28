@@ -1,73 +1,73 @@
 .Tag-list-container {
-    margin: 30px 20px;
-    display: flex;
-    flex-direction: column;
+  margin: 30px 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .Tag-list {
-    flex: 1 1 auto;
-    align-self: flex-start;
-    margin: 0px 10px;
-    background: white;
-    border: 1px solid #CCCCCC;
-    border-radius: 5px;
-    display: flex;
-    flex-wrap: wrap;
-    transition: 0.2s linear;
+  flex: 1 1 auto;
+  align-self: flex-start;
+  margin: 0px 10px;
+  background: white;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  transition: 0.2s linear;
 }
 
 .Tag {
-    display: grid;
-    grid-template: 18px / auto 15px;
-    font-size: 0.8rem;
-    height: 18px;
-    padding: 0px 5px;
-    margin: 5px;
-    border: 1px solid #03A4CA;
-    border-radius: 5px;
-    background: #91E0F3;
-    font-weight: bold;
-    color: #005B70;
-    cursor: default;
+  display: grid;
+  grid-template: 18px / auto 15px;
+  font-size: 0.8rem;
+  height: 18px;
+  padding: 0px 5px;
+  margin: 5px;
+  border: 1px solid #03a4ca;
+  border-radius: 5px;
+  background: #91e0f3;
+  font-weight: bold;
+  color: #005b70;
+  cursor: default;
 }
 
 .Delete-tag {
-    color: #03A4CA;
-    padding: 3px 5px;
-    cursor: default;
-    transition: transform 0.05s ease-out;
+  color: #03a4ca;
+  padding: 3px 5px;
+  cursor: default;
+  transition: transform 0.05s ease-out;
 }
 
 .Delete-tag:hover {
-    color: #005B70;
+  color: #005b70;
 }
 
 .Delete-tag:active {
-    transform: scale(0.8);
+  transform: scale(0.8);
 }
 
 .Tag-input {
-    resize: none;
-    overflow: hidden;
-    flex: 1 1 auto;
-    font-size: 0.8rem;
-    color: #005B70;
-    margin: 5px;
-    padding: 0px;
-    border: none;
-    height: 20px;
-    transition: 0.1s linear;
+  resize: none;
+  overflow: hidden;
+  flex: 1 1 auto;
+  font-size: 0.8rem;
+  color: #005b70;
+  margin: 5px;
+  padding: 0px;
+  border: none;
+  height: 20px;
+  transition: 0.1s linear;
 }
 
 .Tag-input::placeholder {
-    color: #CCCCCC;
-    font-style: italic;
+  color: #cccccc;
+  font-style: italic;
 }
 
 .Tag-input:focus {
-    outline: none;
+  outline: none;
 }
 
 .Tag-input:disabled {
-    background-color: #EEEEEE;
+  background-color: #eeeeee;
 }
