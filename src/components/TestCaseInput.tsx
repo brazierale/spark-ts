@@ -30,8 +30,10 @@ const TestCaseInput = ({
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' || event.key === 'Tab') {
+    if (event.key === 'Enter') {
       event.preventDefault();
+      sendUpdate(selectedTestCase.summary);
+    } else if (event.key === 'Tab') {
       sendUpdate(selectedTestCase.summary);
     }
   };

@@ -1,8 +1,8 @@
 import '../styles/DetailPane.css';
-import Description from "./Description";
-import StepList from "./StepList";
-import TagList from "./TagList";
-import { TestCaseObject } from "../modules/TestCase";
+import Description from './Description';
+import StepList from './StepList';
+import TagList from './TagList';
+import { TestCaseObject } from '../modules/TestCase';
 import Summary from './Summary';
 
 type DetailPaneProps = {
@@ -28,15 +28,14 @@ const DetailPane = ({
 
   if (selectedTestCase) {
     return (
-      <div className="Detail-pane">
-        <div className="Debug-key">{selectedTestCase.key}</div>
-        <div className="Detail-pane-header">
+      <div className='Detail-pane'>
+        <div className='Debug-key'>{selectedTestCase.key}</div>
+        <div className='Detail-pane-header'>
           <Summary
             description={selectedTestCase.summary}
             selectedTestCase={selectedTestCase}
             updateSelectedTestCase={updateSelectedTestCase}
           />
-          <h1 className='Summary'>{selectedTestCase.summary}</h1>
         </div>
         <div className='Detail-pane-body'>
           <Description

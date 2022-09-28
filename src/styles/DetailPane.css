@@ -24,6 +24,11 @@
   z-index: 2;
 }
 
+
+.Detail-pane-header {
+  margin: 20px 20px 0px 20px;
+}
+
 .Summary {
     font-size: 20px;
     padding: 0px;
@@ -33,19 +38,11 @@
     width: 100%;
     resize: none;
     border: none;
+    padding: 0px 0px 8px 0px;
+    font-size: 1.2rem;
+    border-bottom: 2px solid #071f79;
 }
 
-.Detail-pane-header {
-  margin: 20px 20px 0px 20px;
-}
-
-.Detail-pane-header h1 {
-  min-height: 26px;
-  margin: 0px;
-  padding: 0px 0px 10px 0px;
-  font-size: 1.2rem;
-  border-bottom: 2px solid #071f79;
-}
 .Detail-pane-body {
   overflow: auto;
   height: 100%;
