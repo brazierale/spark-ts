@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { TestCaseObject } from '../modules/TestCase';
 
 type SummaryProps = {
@@ -12,10 +12,17 @@ const Summary = ({
   selectedTestCase,
   updateSelectedTestCase,
 }: SummaryProps) => {
-  const handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    event.target.style.height = 'inherit';
-    event.target.style.height = `${event.target.scrollHeight}px`;
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  useEffect(() => {
+    if (textareaRef.current !== null) {
+      textareaRef.current.style.height = '0px';
+      const scrollHeight = textareaRef.current.scrollHeight;
+      textareaRef.current.style.height = scrollHeight + 'px';
+    }
+  });
+
+  const handleUserInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     updateSelectedTestCase({
       ...selectedTestCase,
       summary: event.target.value,
@@ -33,6 +40,7 @@ const Summary = ({
       <textarea
         data-testid='summary'
         className='Summary'
+        ref={textareaRef}
         rows={1}
         maxLength={255}
         value={description}
