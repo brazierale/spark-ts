@@ -73,12 +73,7 @@ class Row extends Component<RowProps> {
               setSelectedTestCaseByKey={setSelectedTestCaseByKey}
               updateSelectedTestCase={updateSelectedTestCase}
             />
-            <div>
-              <TestCaseMove
-                testCase={testCase}
-                setDragEnabled={setDragEnabled}
-              />
-            </div>
+            <TestCaseMove testCase={testCase} setDragEnabled={setDragEnabled} />
             <TestCaseDelete
               testCase={testCase}
               deleteTestCaseByKey={deleteTestCaseByKey}
