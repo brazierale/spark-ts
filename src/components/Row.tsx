@@ -63,24 +63,17 @@ class Row extends Component<RowProps> {
       return connectDropTarget(
         connectDragSource(
           <div className={classes} data-testid='test-case'>
-            <div className='Test-case-container'>
-              <TestCaseInput
-                testCase={testCase}
-                updateTestCaseByKey={updateTestCaseByKey}
-                addTestCase={addTestCase}
-                deleteTestCase={deleteTestCaseByKey}
-                selectedTestCase={selectedTestCase}
-                isSelected={isSelected()}
-                setSelectedTestCaseByKey={setSelectedTestCaseByKey}
-                updateSelectedTestCase={updateSelectedTestCase}
-              />
-            </div>
-            <div>
-              <TestCaseMove
-                testCase={testCase}
-                setDragEnabled={setDragEnabled}
-              />
-            </div>
+            <TestCaseInput
+              testCase={testCase}
+              updateTestCaseByKey={updateTestCaseByKey}
+              addTestCase={addTestCase}
+              deleteTestCase={deleteTestCaseByKey}
+              selectedTestCase={selectedTestCase}
+              isSelected={isSelected()}
+              setSelectedTestCaseByKey={setSelectedTestCaseByKey}
+              updateSelectedTestCase={updateSelectedTestCase}
+            />
+            <TestCaseMove testCase={testCase} setDragEnabled={setDragEnabled} />
             <TestCaseDelete
               testCase={testCase}
               deleteTestCaseByKey={deleteTestCaseByKey}

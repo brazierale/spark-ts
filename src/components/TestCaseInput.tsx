@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useEffect, useRef } from 'react';
 import { TestCaseObject } from '../modules/TestCase';
 
 interface TestCaseInputProps {
@@ -30,8 +31,10 @@ const TestCaseInput = ({
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' || event.key === 'Tab') {
+    if (event.key === 'Enter') {
       event.preventDefault();
+      sendUpdate(selectedTestCase.summary);
+    } else if (event.key === 'Tab') {
       sendUpdate(selectedTestCase.summary);
     }
   };
@@ -65,18 +68,29 @@ const TestCaseInput = ({
     'Test-case-input': true,
     'Selected-input': isSelected,
   });
-
   // this ensures the field remains editable
   let summary = testCase.summary;
   if (isSelected) {
     summary = selectedTestCase.summary;
   }
 
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  useEffect(() => {
+    if (isSelected && textareaRef.current !== null) {
+      textareaRef.current.style.height = '0px';
+      const scrollHeight = textareaRef.current.scrollHeight;
+      textareaRef.current.style.height = scrollHeight + 'px';
+    } else if (textareaRef.current !== null) {
+      textareaRef.current.style.height = '24px';
+    }
+  });
+
   return (
     <textarea
       data-testid='test-case-input'
+      ref={textareaRef}
+      wrap={'on'}
       rows={1}
-      wrap='off'
       maxLength={255}
       placeholder='Enter your test case here...'
       className={classes}

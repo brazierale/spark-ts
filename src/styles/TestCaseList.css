@@ -20,6 +20,7 @@
 
 .Row:focus-within,
 .Selected-row {
+  grid-template: auto / auto 24px 24px;
   box-shadow: 20px 0px 0px #f6f7fe, 2px 2px 10px #cccccc;
   background-color: #f6f7fe;
   position: relative;
@@ -55,8 +56,7 @@
   width: 100%;
   border: none;
   line-height: 24px;
-  padding: 0px;
-  padding-left: 20px;
+  padding: 0px 8px 0px 16px;
   box-sizing: border-box;
   font-size: 1rem;
   text-align: left;
@@ -75,7 +75,6 @@
 
 .Test-case-input:focus,
 .Selected-input {
-  height: 24px;
   outline: none;
   box-sizing: border-box;
   box-shadow: -4px 0px 0px rgb(75, 109, 233);
@@ -86,7 +85,7 @@
 .Delete-row,
 .Move-row {
   color: #4b6de9;
-  margin: 5px auto;
+  margin: auto auto;
   opacity: 0.4;
   visibility: hidden;
   cursor: default;
