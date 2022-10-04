@@ -15,7 +15,10 @@ declare global {
       delete(detailItem: string, description: string): void;
       selectTestCase(title: string): Chainable<Element>;
       mockGetTestCaseList(fixture: string): void;
+      mockAddTestCase(fixture: string): void;
       mockDeleteTestCase(fixture: string): void;
+      mockMoveTestCase(fixture: string): void;
+      mockUpdateTestCase(fixture: string): void;
     }
   }
 }

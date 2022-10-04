@@ -13,6 +13,7 @@ it('mock single test case', () => {
 
 it('add new test case using Enter', () => {
   cy.mockGetTestCaseList('get/single-test-case');
+  cy.mockAddTestCase('success');
   cy.visit('/');
   cy.wait('@getTestCases');
 
@@ -24,12 +25,27 @@ it('add new test case using Enter', () => {
 
 it('add new test case using Save', () => {
   cy.mockGetTestCaseList('get/single-test-case');
+  cy.mockAddTestCase('success');
   cy.visit('/');
   cy.wait('@getTestCases');
 
   cy.getBySel('test-case-input').last().click().type('test input');
-  cy.getBySel('Save').click();
+  cy.getBySel('save').click();
 
   cy.selectTestCase('test input').should('exist');
   cy.getBySel('test-case-input').last().should('have.text', '');
+});
+
+it.only('edit and save description', () => {
+  cy.mockGetTestCaseList('get/single-test-case');
+  cy.mockUpdateTestCase('success');
+  cy.visit('/');
+  cy.wait('@getTestCases');
+
+  cy.selectTestCase('first test');
+  cy.getBySel('description').click().type(' is now updated');
+  cy.getBySel('save').click();
+  cy.wait('@updateTestCase')
+    .its('request.body.update.description')
+    .should('equal', 'first test description is now updated');
 });

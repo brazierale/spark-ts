@@ -1,6 +1,6 @@
 it('delete using delete button', () => {
   cy.mockGetTestCaseList('get/delete-test-case');
-  cy.mockDeleteTestCase('delete/success');
+  cy.mockDeleteTestCase('success');
   cy.visit('/');
   cy.wait('@getTestCases');
   cy.selectTestCase('second test to delete');
@@ -22,7 +22,7 @@ it('delete using delete button', () => {
 
 it('delete by clearing summary field', () => {
   cy.mockGetTestCaseList('get/delete-test-case');
-  cy.mockDeleteTestCase('delete/success');
+  cy.mockDeleteTestCase('success');
   cy.visit('/');
   cy.wait('@getTestCases');
   cy.selectTestCase('second test to delete').clear().type('{enter}');

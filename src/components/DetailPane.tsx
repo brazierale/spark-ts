@@ -53,7 +53,7 @@ const DetailPane = ({
         </div>
         <div className='Detail-pane-footer'>
           <button
-            data-testid='Save'
+            data-testid='save'
             className='Save-details'
             disabled={selectedTestCase.disabled}
             onClick={() => save(selectedTestCase)}
