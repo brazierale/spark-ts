@@ -1,8 +1,11 @@
-it('delete using delete button', () => {
+beforeEach('mock get and delete test cases', () => {
   cy.mockGetTestCaseList('get/delete-test-case');
   cy.mockDeleteTestCase('success');
   cy.visit('/');
   cy.wait('@getTestCases');
+});
+
+it('delete test case, step and tag using delete button', () => {
   cy.selectTestCase('second test to delete');
 
   cy.delete('step', 'step one to delete');
@@ -21,11 +24,18 @@ it('delete using delete button', () => {
 });
 
 it('delete by clearing summary field', () => {
-  cy.mockGetTestCaseList('get/delete-test-case');
-  cy.mockDeleteTestCase('success');
-  cy.visit('/');
-  cy.wait('@getTestCases');
   cy.selectTestCase('second test to delete').clear().type('{enter}');
+
+  cy.getBySelContaining('test-case', '').its('length').should('eq', 2);
+  cy.getBySelContaining('test-case', 'first test').should('exist');
+  cy.getBySelContaining('test-case', 'second test to delete').should(
+    'not.exist'
+  );
+});
+
+it('delete by clearing summary field', () => {
+  cy.selectTestCase('second test to delete');
+  cy.getBySel('summary').clear().type('{enter}');
 
   cy.getBySelContaining('test-case', '').its('length').should('eq', 2);
   cy.getBySelContaining('test-case', 'first test').should('exist');

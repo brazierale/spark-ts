@@ -85,9 +85,14 @@ const TestCaseInput = ({
     }
   });
 
+  let testid = 'test-case-input';
+  if (testCase.key === 'blank') {
+    testid = 'test-case-new';
+  }
+
   return (
     <textarea
-      data-testid='test-case-input'
+      data-testid={testid}
       ref={textareaRef}
       wrap={'on'}
       rows={1}
