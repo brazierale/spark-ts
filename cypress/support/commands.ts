@@ -26,9 +26,31 @@ Cypress.Commands.add('selectTestCase', (title) => {
 
 // API mocking
 Cypress.Commands.add('mockGetTestCaseList', (fixture) => {
-  cy.intercept('/api/testCases', { fixture: fixture }).as('getTestCases');
+  cy.intercept('GET', '/api/testCases', { fixture: fixture }).as(
+    'getTestCases'
+  );
+});
+
+Cypress.Commands.add('mockAddTestCase', (fixture) => {
+  cy.intercept('POST', '/api/testCases', { fixture: fixture }).as(
+    'addTestCase'
+  );
 });
 
 Cypress.Commands.add('mockDeleteTestCase', (fixture) => {
-  cy.intercept('/api/testCases/*', { fixture: fixture }).as('deleteTestCase');
+  cy.intercept('POST', '/api/newTestCaseList', { fixture: fixture }).as(
+    'deleteTestCase'
+  );
+});
+
+Cypress.Commands.add('mockMoveTestCase', (fixture) => {
+  cy.intercept('POST', '/api/newTestCaseList', { fixture: fixture }).as(
+    'moveTestCase'
+  );
+});
+
+Cypress.Commands.add('mockUpdateTestCase', (fixture) => {
+  cy.intercept('PUT', '/api/testCases/*', { fixture: fixture }).as(
+    'updateTestCase'
+  );
 });

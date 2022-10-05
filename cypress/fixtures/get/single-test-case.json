@@ -1,29 +1,23 @@
 {
-    "success": true,
-    "data": [
+  "success": true,
+  "data": [
+    {
+      "tags": ["one", "test"],
+      "steps": [
         {
-            "_id": "5de1509ab53d041399ff86dc",
-            "tags": [
-                "one",
-                "test"
-            ],
-            "steps": [
-              {
-                "_id": "5de1509ab53d041399ff86db",
-                "id": 1,
-                "name": "step one"
-            },
-            {
-                "_id": "5de1509ab53d041399ff86da",
-                "id": 2,
-                "name": "step two"
-            }
-            ],
-            "key": "84dbe4ea-f98f-4d0a-bdfd-ab7173070f55",
-            "sortId": 1,
-            "summary": "first test",
-            "description": "first test description",
-            "__v": 0
+          "id": 1,
+          "name": "step one"
+        },
+        {
+          "id": 2,
+          "name": "step two"
         }
-    ]
+      ],
+      "key": "84dbe4ea-f98f-4d0a-bdfd-ab7173070f55",
+      "sortId": 1,
+      "summary": "first test",
+      "description": "first test description",
+      "__v": 0
+    }
+  ]
 }
