@@ -22,6 +22,7 @@ const Description = ({
     <div data-testid='description' className='Description-container'>
       <span className='Label'>Description</span>
       <textarea
+        data-testid='description-input'
         className='Description-input'
         rows={4}
         placeholder='Enter new description...'

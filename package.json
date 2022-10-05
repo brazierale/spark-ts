@@ -65,11 +65,13 @@
     ]
   },
   "devDependencies": {
+    "@playwright/test": "^1.26.1",
     "cypress": "^10.8.0",
     "dotenv": "^16.0.2",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-prettier": "^4.2.1",
+    "playwright": "^1.26.1",
     "prettier": "^2.7.1"
   }
 }
