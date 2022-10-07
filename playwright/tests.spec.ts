@@ -23,13 +23,13 @@ test('add new test case using Enter', async ({ singleTestPage }) => {
     route.fulfill({ path: './playwright/single-test-case.json' })
   );
 
-  await singleTestPage
-    .locator('data-testid=test-case-new')
-    .click.type('test input')
-    .press('Enter');
+  await singleTestPage.locator('data-testid=test-case-new').fill('test input');
+  await singleTestPage.locator('data-testid=test-case-new').press('Enter');
 
-  await expect(singleTestPage('data-testid=test-case-new')).toHaveText('');
+  await expect(singleTestPage.locator('data-testid=test-case-new')).toHaveText(
+    ''
+  );
   await expect(
-    singleTestPage.locator('data-testid=test-case').hasText('test input')
+    singleTestPage.locator('data-testid=test-case', { hasText: 'test input' })
   ).toBeVisible();
 });
