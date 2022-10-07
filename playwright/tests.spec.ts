@@ -1,29 +1,19 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
-test('load test case', async ({ page }) => {
-  await page.route('**/api/testCases', (route) =>
-    route.fulfill({ path: './playwright/single-test-case.json' })
-  );
-  await page.goto('http://localhost:3000');
-
-  const testCase = await page.locator('data-testid=test-case-input', {
-    hasText: 'first test',
-  });
-  await testCase.click();
-
-  await expect(page.locator('data-testid=description-input')).toHaveText(
-    ' first test description'
-  );
+test('load test case', async ({ singleTestPage }) => {
   await expect(
-    page.locator('data-testid=step', { hasText: 'step one' })
+    singleTestPage.locator('data-testid=description-input')
+  ).toHaveText(' first test description');
+  await expect(
+    singleTestPage.locator('data-testid=step', { hasText: 'step one' })
   ).toBeVisible();
   await expect(
-    page.locator('data-testid=step', { hasText: 'step two' })
+    singleTestPage.locator('data-testid=step', { hasText: 'step two' })
   ).toBeVisible();
   await expect(
-    page.locator('data-testid=tag', { hasText: 'one' })
+    singleTestPage.locator('data-testid=tag', { hasText: 'one' })
   ).toBeVisible();
   await expect(
-    page.locator('data-testid=tag', { hasText: 'test' })
+    singleTestPage.locator('data-testid=tag', { hasText: 'test' })
   ).toBeVisible();
 });
