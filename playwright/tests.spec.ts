@@ -3,7 +3,7 @@ import { test, expect } from './fixtures';
 test('display test case details', async ({ singleTestPage }) => {
   await expect(
     singleTestPage.locator('data-testid=description-input')
-  ).toHaveText(' first test description');
+  ).toHaveValue('first test description');
   await expect(
     singleTestPage.locator('data-testid=step', { hasText: 'step one' })
   ).toBeVisible();
@@ -26,7 +26,7 @@ test('add new test case using Enter', async ({ singleTestPage }) => {
   await singleTestPage.locator('data-testid=test-case-new').fill('test input');
   await singleTestPage.locator('data-testid=test-case-new').press('Enter');
 
-  await expect(singleTestPage.locator('data-testid=test-case-new')).toHaveText(
+  await expect(singleTestPage.locator('data-testid=test-case-new')).toHaveValue(
     ''
   );
   await expect(
@@ -42,7 +42,7 @@ test('add new test case using Save', async ({ singleTestPage }) => {
   await singleTestPage.locator('data-testid=test-case-new').fill('test input');
   await singleTestPage.locator('data-testid=save').click();
 
-  await expect(singleTestPage.locator('data-testid=test-case-new')).toHaveText(
+  await expect(singleTestPage.locator('data-testid=test-case-new')).toHaveValue(
     ''
   );
   await expect(
@@ -81,4 +81,36 @@ test('edit and save test case', async ({ singleTestPage }) => {
     });
   });
   await singleTestPage.locator('data-testid=save').click();
+});
+
+test('add new step', async({ singleTestPage }) => {
+  await singleTestPage.locator('data-testid=test-case', { hasText: 'first test' }).click();
+  await singleTestPage.locator('data-testid=step-new').click();
+  await singleTestPage.locator('data-testid=step-new').type('new step');
+  await singleTestPage.locator('data-testid=step-new').press('Enter');
+
+  await expect(singleTestPage.locator('data-testid=step', { hasText: 'new step' })).toBeVisible();
+  await expect(singleTestPage.locator('data-testid=step-new')).toHaveValue('');
+});
+
+test('add new tag', async({ singleTestPage }) => {
+  await singleTestPage.locator('data-testid=test-case', { hasText: 'first test' }).click();
+  await singleTestPage.locator('data-testid=tag-new').click();
+  await singleTestPage.locator('data-testid=tag-new').type('new tag');
+  await singleTestPage.locator('data-testid=tag-new').press('Enter');
+
+  await expect(singleTestPage.locator('data-testid=tag', { hasText: 'new tag' })).toBeVisible();
+  await expect(singleTestPage.locator('data-testid=tag-new')).toHaveValue('');
+});
+
+test('do not add duplicate tag', async({ singleTestPage }) => {
+  await singleTestPage.locator('data-testid=test-case', { hasText: 'first test' }).click();
+  await expect(singleTestPage.locator('data-testid=tag')).toHaveCount(2);
+
+  await singleTestPage.locator('data-testid=tag-new').click();
+  await singleTestPage.locator('data-testid=tag-new').type('one');
+  await singleTestPage.locator('data-testid=tag-new').press('Enter');
+
+  await expect(singleTestPage.locator('data-testid=tag-new')).toHaveValue('');
+  await expect(singleTestPage.locator('data-testid=tag')).toHaveCount(2);
 });
