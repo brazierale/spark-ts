@@ -1,75 +1,67 @@
-import { test, expect } from './fixtures';
+import { test, expect } from '@playwright/test';
+import { TestCasePage } from './test-case-page';
 
-test('display test case details', async ({ singleTestPage }) => {
+test('display test case details', async ({ page }) => {
+  const testCasePage = new TestCasePage(page);
+  await testCasePage.loadSingleTestCase()
+  await testCasePage.selectTestCase('first test');
   await expect(
-    singleTestPage.locator('data-testid=description-input')
+    page.locator('data-testid=description-input')
   ).toHaveValue('first test description');
   await expect(
-    singleTestPage.locator('data-testid=step', { hasText: 'step one' })
+    page.locator('data-testid=step', { hasText: 'step one' })
   ).toBeVisible();
   await expect(
-    singleTestPage.locator('data-testid=step', { hasText: 'step two' })
+    page.locator('data-testid=step', { hasText: 'step two' })
   ).toBeVisible();
   await expect(
-    singleTestPage.locator('data-testid=tag', { hasText: 'one' })
+    page.locator('data-testid=tag', { hasText: 'one' })
   ).toBeVisible();
   await expect(
-    singleTestPage.locator('data-testid=tag', { hasText: 'test' })
+    page.locator('data-testid=tag', { hasText: 'test' })
   ).toBeVisible();
 });
 
-test('add new test case using Enter', async ({ singleTestPage }) => {
-  await singleTestPage.route('**/api/testCases/*', (route) =>
-    route.fulfill({ path: './playwright/single-test-case.json' })
-  );
+test('add new test case using Enter', async ({ page }) => {
+  const testCasePage = new TestCasePage(page);
+  await testCasePage.loadSingleTestCase()
+  await testCasePage.mockTestCaseUpdate('success');
 
-  await singleTestPage.locator('data-testid=test-case-new').fill('test input');
-  await singleTestPage.locator('data-testid=test-case-new').press('Enter');
+  await testCasePage.addTestCase('test input');
 
-  await expect(singleTestPage.locator('data-testid=test-case-new')).toHaveValue(
+  await expect(page.locator('data-testid=test-case-new')).toHaveValue('');
+  await expect(
+    page.locator('data-testid=test-case', { hasText: 'test input' })
+  ).toBeVisible();
+});
+
+test('add new test case using Save', async ({ page }) => {
+  const testCasePage = new TestCasePage(page);
+  await testCasePage.loadSingleTestCase()
+  await testCasePage.mockTestCaseUpdate('success');
+
+  await page.locator('data-testid=test-case-new').fill('test input');
+  await page.locator('data-testid=save').click();
+
+  await expect(page.locator('data-testid=test-case-new')).toHaveValue(
     ''
   );
   await expect(
-    singleTestPage.locator('data-testid=test-case', { hasText: 'test input' })
+    page.locator('data-testid=test-case', { hasText: 'test input' })
   ).toBeVisible();
 });
 
-test('add new test case using Save', async ({ singleTestPage }) => {
-  await singleTestPage.route('**/api/testCases/*', (route) =>
-    route.fulfill({ path: './playwright/single-test-case.json' })
-  );
+test('edit and save test case', async ({ page }) => {
+  const testCasePage = new TestCasePage(page);
+  await testCasePage.loadSingleTestCase()
+  await testCasePage.mockTestCaseUpdate('success.json');
+  await testCasePage.selectTestCase('first test');
 
-  await singleTestPage.locator('data-testid=test-case-new').fill('test input');
-  await singleTestPage.locator('data-testid=save').click();
-
-  await expect(singleTestPage.locator('data-testid=test-case-new')).toHaveValue(
-    ''
-  );
-  await expect(
-    singleTestPage.locator('data-testid=test-case', { hasText: 'test input' })
-  ).toBeVisible();
-});
-
-test('edit and save test case', async ({ singleTestPage }) => {
-  await singleTestPage.route('**/api/testCases/*', (route) =>
-    route.fulfill({ path: './playwright/single-test-case.json' })
-  );
-
-  singleTestPage
-    .locator('data-testid=test-case', { hasText: 'first test' })
-    .click();
-  await singleTestPage.locator('data-testid=summary').click();
-  await singleTestPage.locator('data-testid=summary').type(' updated');
-  await singleTestPage.locator('data-testid=description').click();
-  await singleTestPage.locator('data-testid=description').type(' updated');
-  await singleTestPage
-    .locator('data-testid=step', { hasText: 'step one' })
-    .click();
-  await singleTestPage
-    .locator('data-testid=step', { hasText: 'step one' })
-    .type(' updated');
+  await page.locator('data-testid=summary').fill('first test updated');
+  await page.locator('data-testid=description-input').fill('first test description updated');
+  await page.locator('data-testid=step-input', { hasText: 'step one' }).fill('step one updated');
     
-  singleTestPage.on('request', (request) => {
+  page.on('request', (request) => {
     expect(request.postDataJSON().update).toEqual({
       description: 'first test description updated',
       steps: [
@@ -80,37 +72,37 @@ test('edit and save test case', async ({ singleTestPage }) => {
       tags: ['one', 'test'],
     });
   });
-  await singleTestPage.locator('data-testid=save').click();
+  await page.locator('data-testid=save').click();
 });
 
-test('add new step', async({ singleTestPage }) => {
-  await singleTestPage.locator('data-testid=test-case', { hasText: 'first test' }).click();
-  await singleTestPage.locator('data-testid=step-new').click();
-  await singleTestPage.locator('data-testid=step-new').type('new step');
-  await singleTestPage.locator('data-testid=step-new').press('Enter');
+test('add new step', async({ page }) => {
+  const testCasePage = new TestCasePage(page);
+  await testCasePage.loadSingleTestCase()
+  await testCasePage.selectTestCase('first test');
+  await testCasePage.addStep('new step');
 
-  await expect(singleTestPage.locator('data-testid=step', { hasText: 'new step' })).toBeVisible();
-  await expect(singleTestPage.locator('data-testid=step-new')).toHaveValue('');
+  await expect(page.locator('data-testid=step', { hasText: 'new step' })).toBeVisible();
+  await expect(page.locator('data-testid=step-new')).toHaveValue('');
 });
 
-test('add new tag', async({ singleTestPage }) => {
-  await singleTestPage.locator('data-testid=test-case', { hasText: 'first test' }).click();
-  await singleTestPage.locator('data-testid=tag-new').click();
-  await singleTestPage.locator('data-testid=tag-new').type('new tag');
-  await singleTestPage.locator('data-testid=tag-new').press('Enter');
+test('add new tag', async({ page }) => {
+  const testCasePage = new TestCasePage(page);
+  await testCasePage.loadSingleTestCase()
+  await testCasePage.selectTestCase('first test');
+  await testCasePage.addTag('new tag');
 
-  await expect(singleTestPage.locator('data-testid=tag', { hasText: 'new tag' })).toBeVisible();
-  await expect(singleTestPage.locator('data-testid=tag-new')).toHaveValue('');
+  await expect(page.locator('data-testid=tag', { hasText: 'new tag' })).toBeVisible();
+  await expect(page.locator('data-testid=tag-new')).toHaveValue('');
 });
 
-test('do not add duplicate tag', async({ singleTestPage }) => {
-  await singleTestPage.locator('data-testid=test-case', { hasText: 'first test' }).click();
-  await expect(singleTestPage.locator('data-testid=tag')).toHaveCount(2);
+test('do not add duplicate tag', async({ page }) => {
+  const testCasePage = new TestCasePage(page);
+  await testCasePage.loadSingleTestCase()
+  await testCasePage.selectTestCase('first test');
+  await expect(page.locator('data-testid=tag')).toHaveCount(2);
 
-  await singleTestPage.locator('data-testid=tag-new').click();
-  await singleTestPage.locator('data-testid=tag-new').type('one');
-  await singleTestPage.locator('data-testid=tag-new').press('Enter');
+  await testCasePage.addTag('one');
 
-  await expect(singleTestPage.locator('data-testid=tag-new')).toHaveValue('');
-  await expect(singleTestPage.locator('data-testid=tag')).toHaveCount(2);
+  await expect(page.locator('data-testid=tag-new')).toHaveValue('');
+  await expect(page.locator('data-testid=tag')).toHaveCount(2);
 });
