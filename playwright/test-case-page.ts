@@ -34,17 +34,20 @@ export class TestCasePage {
   }
 
   async addTestCase(summary: string) {
-    await this.page.locator('data-testid=test-case-new').fill(summary);
+    await this.page.locator('data-testid=test-case-new').click();
+    await this.page.locator('data-testid=test-case-new').type(summary);
     await this.page.locator('data-testid=test-case-new').press('Enter');
   }
 
   async addStep(name: string) {
-    await this.page.locator('data-testid=step-new').fill(name);
+    await this.page.locator('data-testid=step-new').click();
+    await this.page.locator('data-testid=step-new').type(name);
     await this.page.locator('data-testid=step-new').press('Enter');
   }
 
   async addTag(name: string) {
-    await this.page.locator('data-testid=tag-new').fill(name);
+    await this.page.locator('data-testid=tag-new').click();
+    await this.page.locator('data-testid=tag-new').type(name);
     await this.page.locator('data-testid=tag-new').press('Enter');
   }
 }

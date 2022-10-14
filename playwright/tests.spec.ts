@@ -40,7 +40,8 @@ test('add new test case using Save', async ({ page }) => {
   await testCasePage.loadSingleTestCase()
   await testCasePage.mockTestCaseUpdate('success');
 
-  await page.locator('data-testid=test-case-new').fill('test input');
+  await page.locator('data-testid=test-case-new').click();
+  await page.locator('data-testid=test-case-new').type('test input');
   await page.locator('data-testid=save').click();
 
   await expect(page.locator('data-testid=test-case-new')).toHaveValue(
@@ -57,9 +58,13 @@ test('edit and save test case', async ({ page }) => {
   await testCasePage.mockTestCaseUpdate('success.json');
   await testCasePage.selectTestCase('first test');
 
-  await page.locator('data-testid=summary').fill('first test updated');
-  await page.locator('data-testid=description-input').fill('first test description updated');
-  await page.locator('data-testid=step-input', { hasText: 'step one' }).fill('step one updated');
+  
+  await page.locator('data-testid=summary').click();
+  await page.locator('data-testid=summary').type(' updated');
+  await page.locator('data-testid=description-input').click();
+  await page.locator('data-testid=description-input').type(' updated');
+  await page.locator('data-testid=step-input', { hasText: 'step one' }).click();
+  await page.locator('data-testid=step-input', { hasText: 'step one' }).type(' updated');
     
   page.on('request', (request) => {
     expect(request.postDataJSON().update).toEqual({
