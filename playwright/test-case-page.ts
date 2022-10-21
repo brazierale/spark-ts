@@ -21,6 +21,20 @@ export class TestCasePage {
       .click();
   }
 
+  async loadTestCasesToDelete() {
+    await this.page.route('**/api/testCases', (route) =>
+      route.fulfill({ path: './playwright/delete-test-case.json' })
+    );
+
+    await this.page.goto('http://localhost:3000');
+
+    await this.page
+      .locator('data-testid=test-case-input', {
+        hasText: 'second test to delete',
+      })
+      .click();
+  }
+
   async mockTestCaseUpdate(fixture: string) {
     await this.page.route('**/api/testCases/*', (route) =>
       route.fulfill({ path: `./playwright/${fixture}` })
@@ -29,8 +43,8 @@ export class TestCasePage {
 
   async selectTestCase(summary: string) {
     await this.page
-    .locator('data-testid=test-case', { hasText: summary })
-    .click();
+      .locator('data-testid=test-case', { hasText: summary })
+      .click();
   }
 
   async addTestCase(summary: string) {

@@ -1,0 +1,53 @@
+{
+    "success": true,
+    "data": [
+        {
+            "_id": "5de1509ab53d041399ff86dc",
+            "tags": [
+                "one",
+                "test"
+            ],
+            "steps": [
+              {
+                "_id": "5de1509ab53d041399ff86db",
+                "id": 1,
+                "name": "step one"
+            },
+            {
+                "_id": "5de1509ab53d041399ff86da",
+                "id": 2,
+                "name": "step two"
+            }
+            ],
+            "key": "84dbe4ea-f98f-4d0a-bdfd-ab7173070f55",
+            "sortId": 1,
+            "summary": "first test",
+            "description": "first test description",
+            "__v": 0
+        },
+        {
+            "_id": "4de1509ab53d041399ff86dc",
+            "tags": [
+                "one-delete",
+                "test-delete"
+            ],
+            "steps": [
+              {
+                "_id": "6de1509ab53d041399ff86db",
+                "id": 3,
+                "name": "step one to delete"
+            },
+            {
+                "_id": "7de1509ab53d041399ff86da",
+                "id": 4,
+                "name": "step two to delete"
+            }
+            ],
+            "key": "24dbe4ea-f98f-4d0a-bdfd-ab7173070f55",
+            "sortId": 2,
+            "summary": "second test to delete",
+            "description": "second test description",
+            "__v": 0
+        }
+    ]
+}
