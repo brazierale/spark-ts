@@ -6,11 +6,10 @@ test('delete test case, step and tag using delete button', async ({ page }) => {
   await testCasePage.loadTestCasesToDelete();
 
   await page
-    .locator('data-testid=step', { hasText: 'step one to delete' }).hover();
-  
+    .locator('text=step one to delete').hover();
+
   await page
-    .locator('data-testid=step-delete').first() // how to attach this to the step?
-    .click();
+    .locator('text=step one to deletex >> [data-testid="step-delete"]').click();
 
     expect(page.locator('data-testid=step', { hasText: 'step one to delete' })).not.toBeVisible;
     expect(page.locator('data-testid=step', { hasText: 'step one to delete' })).toBeVisible;
