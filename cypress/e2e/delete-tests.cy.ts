@@ -23,7 +23,7 @@ it('delete test case, step and tag using delete button', () => {
   );
 });
 
-it('delete by clearing summary field', () => {
+it('delete by clearing summary field in test case list', () => {
   cy.selectTestCase('second test to delete').clear().type('{enter}');
 
   cy.getBySelContaining('test-case', '').its('length').should('eq', 2);
@@ -33,9 +33,10 @@ it('delete by clearing summary field', () => {
   );
 });
 
-it('delete by clearing summary field', () => {
+it('delete by clearing summary field in detail pane', () => {
   cy.selectTestCase('second test to delete');
-  cy.getBySel('summary').clear().type('{enter}');
+  cy.getBySel('summary').clear();
+  cy.getBySel('save').click();
 
   cy.getBySelContaining('test-case', '').its('length').should('eq', 2);
   cy.getBySelContaining('test-case', 'first test').should('exist');
