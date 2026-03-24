@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import TestCaseList from './TestCaseList';
 import DetailPane from './DetailPane';
@@ -8,17 +7,13 @@ import { blankTestCase, TestCaseObject } from '../modules/TestCase';
 import { generateKey } from '../modules/KeyGen';
 import {
   updateTestCase,
-  addTestCase as storageAdd,
   deleteTestCase as storageDelete,
   saveTestCases,
-  exportToJSON,
-  importFromJSON,
 } from '../services/storage';
 
 const MainContainer = () => {
   const [testCaseList, setTestCaseListState] = useRecoilState(testCaseListState);
   const [selectedTestCase, setSelectedTestCase] = useRecoilState(selectedTestCaseState);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const updateTestCaseByKey = (testCase: TestCaseObject) => {
     const updated = updateTestCase(testCaseList, testCase);
@@ -28,13 +23,7 @@ const MainContainer = () => {
   const addTestCase = (testCase: TestCaseObject) => {
     const newTestCase = { ...testCase, key: generateKey() };
     const withoutBlank = testCaseList.filter((tc) => tc.key !== 'blank');
-    const index = withoutBlank.findIndex((tc) => tc.key === testCase.key);
-    const inserted = [
-      ...withoutBlank.slice(0, index),
-      newTestCase,
-      ...withoutBlank.slice(index),
-      blankTestCase(),
-    ];
+    const inserted = [...withoutBlank, newTestCase, blankTestCase()];
     saveTestCases(inserted);
     setTestCaseListState(inserted);
     setSelectedTestCase(blankTestCase());
@@ -64,46 +53,8 @@ const MainContainer = () => {
     setTestCaseListState(newList);
   };
 
-  // ── Export ──────────────────────────────────────────────────────────────
-  const handleExport = () => {
-    exportToJSON(testCaseList);
-  };
-
-  // ── Import ──────────────────────────────────────────────────────────────
-  const handleImportClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    try {
-      const imported = await importFromJSON(file);
-      setTestCaseListState([...imported, blankTestCase()]);
-    } catch (err) {
-      console.error('Import failed:', err);
-    }
-    // reset so the same file can be re-imported if needed
-    e.target.value = '';
-  };
-
   return (
     <div className='Main-container'>
-      <div className='Import-export-bar'>
-        <button className='Import-export-button' onClick={handleExport}>
-          Export JSON
-        </button>
-        <button className='Import-export-button' onClick={handleImportClick}>
-          Import JSON
-        </button>
-        <input
-          ref={fileInputRef}
-          type='file'
-          accept='.json'
-          style={{ display: 'none' }}
-          onChange={handleFileChange}
-        />
-      </div>
       <div className='Pane-row'>
         <div className='Test-case-list-container'>
           <TestCaseList

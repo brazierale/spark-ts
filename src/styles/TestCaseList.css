@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+* {
+  font-family: Nunito;
+  font-size: 1rem;
+}
+
 .Test-case-list-container {
   height: calc(100vh - 80px);
   overflow: auto;
@@ -31,12 +38,6 @@
   border-top: 25px solid #ecf2f5;
 }
 
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
-* {
-  font-family: Nunito;
-  font-size: 1rem;
-}
 
 .Load-error {
   margin-top: 24px;

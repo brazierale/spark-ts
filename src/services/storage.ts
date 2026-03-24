@@ -1,78 +1,53 @@
 import { TestCaseObject } from '../modules/TestCase';
 
-const STORAGE_KEY = 'spark-testcases';
-
-export function loadTestCases(): TestCaseObject[] {
+export async function loadTestCases(): Promise<TestCaseObject[]> {
     try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return [];
-        const parsed = JSON.parse(raw) as TestCaseObject[];
+        const res = await fetch('/api/storage');
+        const parsed = (await res.json()) as TestCaseObject[];
         return parsed.map(
             (tc) =>
                 new TestCaseObject(tc.key, tc.summary, tc.description, tc.steps, tc.tags)
         );
-    } catch {
+    } catch (err) {
+        console.error('Failed to load test cases:', err);
         return [];
     }
 }
 
-function persist(list: TestCaseObject[]): void {
+async function persist(list: TestCaseObject[]): Promise<void> {
     // Strip the blank sentinel before saving
     const toSave = list.filter((tc) => tc.key !== 'blank');
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(toSave));
+    try {
+        await fetch('/api/storage', {
+            method: 'POST',
+            body: JSON.stringify(toSave, null, 2),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    } catch (err) {
+        console.error('Failed to save test cases:', err);
+    }
 }
 
-export function saveTestCases(list: TestCaseObject[]): void {
-    persist(list);
+export async function saveTestCases(list: TestCaseObject[]): Promise<void> {
+    await persist(list);
 }
 
 export function addTestCase(list: TestCaseObject[], tc: TestCaseObject): TestCaseObject[] {
     const updated = [...list.filter((t) => t.key !== 'blank'), tc];
-    persist(updated);
+    persist(updated); // Background save
     return updated;
 }
 
 export function updateTestCase(list: TestCaseObject[], tc: TestCaseObject): TestCaseObject[] {
     const updated = list.map((t) => (t.key === tc.key ? tc : t));
-    persist(updated);
+    persist(updated); // Background save
     return updated;
 }
 
 export function deleteTestCase(list: TestCaseObject[], key: string): TestCaseObject[] {
     const updated = list.filter((t) => t.key !== key && t.key !== 'blank');
-    persist(updated);
+    persist(updated); // Background save
     return updated;
-}
-
-export function exportToJSON(list: TestCaseObject[]): void {
-    const toExport = list.filter((tc) => tc.key !== 'blank');
-    const json = JSON.stringify(toExport, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'spark-testcases.json';
-    a.click();
-    URL.revokeObjectURL(url);
-}
-
-export function importFromJSON(file: File): Promise<TestCaseObject[]> {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            try {
-                const parsed = JSON.parse(e.target?.result as string) as TestCaseObject[];
-                const imported = parsed.map(
-                    (tc) =>
-                        new TestCaseObject(tc.key, tc.summary, tc.description, tc.steps, tc.tags)
-                );
-                persist(imported);
-                resolve(imported);
-            } catch {
-                reject(new Error('Invalid JSON file'));
-            }
-        };
-        reader.onerror = () => reject(new Error('Failed to read file'));
-        reader.readAsText(file);
-    });
 }
