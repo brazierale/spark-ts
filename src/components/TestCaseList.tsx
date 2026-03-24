@@ -66,7 +66,7 @@ const TestCaseList = ({
     if (testCaseList.length === 0) {
       return (
         <div data-test-id='load-error' className='Load-error'>
-          Failed to load. Is the API running?
+          No test cases found.
           <button
             className='Load-error-button'
             onClick={() => window.location.reload()}

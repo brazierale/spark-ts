@@ -1,15 +1,17 @@
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import MainContainer from './components/MainContainer';
 import './styles/App.css';
 import logo from './styles/small-header.svg';
 
 const App = () => {
   return (
-    <div className='App'>
-      <Header />
-      <MainContainer />
-    </div>
+    <DndProvider backend={HTML5Backend}>
+      <div className='App'>
+        <Header />
+        <MainContainer />
+      </div>
+    </DndProvider>
   );
 };
 
@@ -23,4 +25,4 @@ const Header = () => {
   );
 };
 
-export default DragDropContext(HTML5Backend)(App);
+export default App;

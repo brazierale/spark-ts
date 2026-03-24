@@ -1,40 +1,10 @@
-import { atom, selector } from 'recoil';
-import axios from 'axios';
+import { atom } from 'recoil';
 import { blankTestCase, TestCaseObject } from '../modules/TestCase';
-import { apiUrl } from '../config';
-
-const getTestCaseList = selector({
-  key: 'GetTestCaseList',
-  get: async () => {
-    let testCases: TestCaseObject[] = [];
-    try {
-      const res = await axios.get(`${apiUrl}/api/testCases`);
-
-      if (res.data.data.length > 0) {
-        testCases = res.data.data.map(
-          (testCase: TestCaseObject) =>
-            new TestCaseObject(
-              testCase.key,
-              testCase.summary,
-              testCase.description,
-              testCase.steps,
-              testCase.tags
-            )
-        );
-      }
-      testCases.push(blankTestCase());
-      return testCases;
-    } catch (err) {
-      // an empty list will be used to indicate an error in loading
-      console.log(err);
-      return [];
-    }
-  },
-});
+import { loadTestCases } from '../services/storage';
 
 const testCaseListState = atom<TestCaseObject[]>({
   key: 'testCaseList',
-  default: getTestCaseList,
+  default: [...loadTestCases(), blankTestCase()],
 });
 
 export default testCaseListState;
